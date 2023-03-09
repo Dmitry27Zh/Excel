@@ -1,0 +1,30 @@
+{
+  "name": "excel",
+  "version": "1.0.0",
+  "description": "Pure JavaScript Advanced Application",
+  "main": "webpack.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dmitry27Zh/Excel.git"
+  },
+  "keywords": [
+    "excel",
+    "js",
+    "javascript",
+    "application",
+    "app",
+    "oop",
+    "es6",
+    "framework"
+  ],
+  "author": "Dmitry Zhidkov <dmitry27zh@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Dmitry27Zh/Excel/issues"
+  },
+  "homepage": "https://github.com/Dmitry27Zh/Excel#readme",
+  "private": true
+}
