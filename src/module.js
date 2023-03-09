@@ -1,7 +1,8 @@
 console.log('Module')
 
 async function start() {
-  return 'start'
+  const result = await Promise.resolve('Start')
+  return result
 }
 
 start().then((msg) => console.log(msg))
