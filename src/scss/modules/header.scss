@@ -1,5 +1,5 @@
 .header {
-  background: aquamarine;
+  min-height: $height-header;
 
   &__container {
     display: flex;
@@ -7,6 +7,7 @@
     align-items: center;
     flex-wrap: wrap;
     gap: 50px;
+    padding-block: 10px;
   }
 
   &__buttons {
