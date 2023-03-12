@@ -1,11 +1,12 @@
 .toolbar {
   min-height: $height-toolbar;
   padding: 10px 0;
-  border-top: 1px solid $border-color;
-  border-bottom: 1px solid $border-color;
+  border-top: 1px solid $color-border;
+  border-bottom: 1px solid $color-border;
 
   &__container {
-    padding-block: 10px;
+    display: flex;
+    align-items: center;
   }
 
   &__tools {
@@ -19,7 +20,7 @@
     align-items: center;
     gap: 5px;
     margin: 0 -1px 0 0;
-    border-left: 1px solid $border-color;
-    border-right: 1px solid $border-color;
+    border-left: 1px solid $color-border;
+    border-right: 1px solid $color-border;
   }
 }

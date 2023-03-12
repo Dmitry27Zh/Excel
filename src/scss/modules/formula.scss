@@ -1,0 +1,30 @@
+.formula {
+  border-bottom: 1px solid $color-border;
+
+  &__container {
+    display: flex;
+    align-items: center;
+  }
+
+  &__info {
+    border: none;
+    border-right: 1px solid $color-border;
+  }
+
+  &__input {
+    flex: 1 1 auto;
+  }
+
+  &__input-element {
+    height: 30px;
+    font-size: 14px;
+
+    &:hover {
+      border-color: transparent;
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+}
