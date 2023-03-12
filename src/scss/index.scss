@@ -5,6 +5,8 @@
 @import './core/mixins';
 @import './core/global.scss';
 
+@import './modules/input.scss';
+@import './modules/button.scss';
 @import './modules/header.scss';
 @import './modules/toolbar.scss';
 @import './modules/formula.scss';
