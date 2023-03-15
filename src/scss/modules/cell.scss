@@ -1,4 +1,10 @@
 .cell {
+  flex: 0 0 auto;
+  display: flex;
+  justify-content: center;
+  width: $width-cell-info;
   min-height: $height-cell;
   padding: 10px;
+  background: #ffffff;
+  border: 1px solid $color-border-cell;
 }
