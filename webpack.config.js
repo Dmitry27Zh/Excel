@@ -53,6 +53,10 @@ const getPlugins = () => {
           fix: true,
         })
     )
+  } else {
+    plugins.push(new MiniCssExtractPlugin({
+      filename: '../src/assets/styles.css',
+    }))
   }
 
   return plugins
