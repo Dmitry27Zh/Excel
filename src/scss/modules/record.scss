@@ -1,0 +1,27 @@
+.record {
+  &__link {
+    display: grid;
+    grid-template-columns: 1fr min(300px, 50%);
+    align-items: center;
+    padding-block: 10px;
+    word-break: break-all;
+    border-left: 1px solid #000000;
+    border-right: 1px solid #000000;
+
+    &:hover,
+    &:focus-visible {
+      color: #ffffff;
+      background: $dark-green;
+    }
+  }
+
+  &__title {
+    margin: 0;
+    padding-inline: 10px;
+  }
+
+  &__time {
+    justify-self: center;
+    padding-inline: 10px;
+  }
+}

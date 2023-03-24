@@ -1,0 +1,15 @@
+.dashboard {
+  width: 100%;
+
+  &__table-container {
+    max-width: 800px;
+    padding-block: 10px;
+    border: 1px solid #000000;
+  }
+
+  &__new {
+    padding-block: 20px;
+    margin-bottom: 40px;
+    background: #9d9c9c;
+  }
+}
