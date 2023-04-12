@@ -3,6 +3,13 @@ import { ExcelComponent } from '@core/excel-component';
 export class Table extends ExcelComponent {
   static className = 'excel__table table'
 
+  constructor($root) {
+    super($root, {
+      name: 'Table',
+      eventTypes: [],
+    })
+  }
+
   toHTML() {
     return `
       <div class="table__row">

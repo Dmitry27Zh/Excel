@@ -4,7 +4,7 @@ export class ExcelComponent extends DOMListener {
   static tagName = 'div'
 
   constructor($root, options = {}) {
-    super($root, options.listeners)
+    super($root, options.eventTypes)
   }
 
   init() {

@@ -11,7 +11,13 @@
   "rules": {
     "semi": "off",
     "require-jsdoc": "off",
-    "object-curly-spacing": "off"
+    "object-curly-spacing": "off",
+    "max-len": [
+      "error",
+      {
+        "ignoreTemplateLiterals": true
+      }
+    ]
   },
   "extends": ["eslint:recommended", "google"]
 }
