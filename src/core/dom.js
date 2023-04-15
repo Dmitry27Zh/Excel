@@ -18,6 +18,10 @@ class Dom {
     this.$el.addEventListener(eventType, callback)
   }
 
+  off(eventType, callback) {
+    this.$el.removeEventListener(eventType, callback)
+  }
+
   clear() {
     this.html('')
     return this
