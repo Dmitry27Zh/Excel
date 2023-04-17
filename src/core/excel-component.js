@@ -4,13 +4,21 @@ import { capitalize } from '@core/utils'
 export class ExcelComponent extends DOMListener {
   static tagName = 'div'
 
-  constructor($root, options = {}) {
+  constructor($root, options = {
+    name: new.target.name,
+  }) {
     super($root, options.eventTypes)
+    this.name = options.name
+
     this.bindListeners()
   }
 
   init() {
     this.addListeners()
+  }
+
+  destroy() {
+    this.removeListeners()
   }
 
   static getListenerName = (eventType) => {
@@ -20,7 +28,15 @@ export class ExcelComponent extends DOMListener {
   bindListeners() {
     this.eventTypes.forEach((eventType) => {
       const listenerName = ExcelComponent.getListenerName(eventType)
-      this[listenerName] = this[listenerName].bind(this)
+      const listener = this[listenerName]?.bind(this)
+
+      if (!listener) {
+        throw new Error(
+            `Listener ${listenerName} is not implemented in ${this.name} Component`
+        )
+      }
+
+      this[listenerName] = listener
     })
   }
 

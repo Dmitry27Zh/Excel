@@ -6,8 +6,12 @@ export class Table extends ExcelComponent {
   constructor($root) {
     super($root, {
       name: 'Table',
-      eventTypes: [],
+      eventTypes: ['click'],
     })
+  }
+
+  onClick(event) {
+    console.log(`Click! ${event.target}`);
   }
 
   toHTML() {

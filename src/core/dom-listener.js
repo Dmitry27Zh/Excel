@@ -1,4 +1,4 @@
-import { ExcelComponent } from '@/excel-component'
+import { ExcelComponent } from '@core/excel-component'
 
 export class DOMListener {
   constructor($root, eventTypes = []) {
@@ -14,13 +14,6 @@ export class DOMListener {
     this.eventTypes.forEach((eventType) => {
       const listenerName = ExcelComponent.getListenerName(eventType)
       const listener = this[listenerName]
-
-      if (!listener) {
-        throw new Error(
-            `Callback ${listenerName} is not implemented in ${this.name} Component`
-        )
-      }
-
       this.$root.on(eventType, listener)
     })
   }
@@ -29,13 +22,6 @@ export class DOMListener {
     this.eventTypes.forEach((eventType) => {
       const listenerName = ExcelComponent.getListenerName(eventType)
       const listener = this[listenerName]
-
-      if (!listener) {
-        throw new Error(
-            `Callback ${listenerName} is not implemented in ${this.name} Component`
-        )
-      }
-
       this.$root.off(eventType, listener)
     })
   }
