@@ -49,12 +49,18 @@ const createMainRow = (info, cells) => {
   return createRow(info, data)
 }
 
-const createTable = (rowsCount = 12) => {
+const createMainRows = (rows) => {
+  return rows.map((cells, index) => {
+    const info = index + 1
+    const mainRow = createMainRow(info, cells)
+
+    return mainRow
+  })
+}
+
+const createTable = (rows = [['', '', ''], ['', '', ''], ['', '', '']]) => {
   const serviceRow = createServiceRow()
-  const mainRows = Array.from(
-      { length: rowsCount },
-      (_, index) => createMainRow(index + 1)
-  )
+  const mainRows = createMainRows(rows)
 
   return [serviceRow, ...mainRows].join('')
 }
