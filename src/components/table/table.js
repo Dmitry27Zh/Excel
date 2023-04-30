@@ -7,7 +7,7 @@ export class Table extends ExcelComponent {
   constructor($root) {
     super($root, {
       name: 'Table',
-      eventTypes: ['click'],
+      eventTypes: ['click', 'mousedown', 'mousemove', 'mouseup'],
     })
   }
 
@@ -17,5 +17,17 @@ export class Table extends ExcelComponent {
 
   toHTML() {
     return createTable()
+  }
+
+  onMousedown() {
+    console.log('mousedown')
+  }
+
+  onMousemove() {
+    console.log('mousemove')
+  }
+
+  onMouseup() {
+    console.log('mouseup')
   }
 }
