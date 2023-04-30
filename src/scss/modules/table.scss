@@ -16,6 +16,12 @@
     &:empty {
       box-shadow: inset 0 -2px 2px rgba(0, 0, 0, 0.5);
     }
+
+    .table__resizer {
+      left: 0;
+      height: $height-resizer;
+      cursor: row-resize;
+    }
   }
 
   &__info-empty {
@@ -32,7 +38,26 @@
   }
 
   &__head {
+    position: relative;
     justify-content: center;
     background: $color-bg-column-head;
+
+    .table__resizer {
+      top: 0;
+      width: $width-resizer;
+      cursor: col-resize;
+    }
+  }
+
+  &__resizer {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    background: $color-border-cell-active;
+    opacity: 0;
+
+    &:hover {
+      opacity: 1;
+    }
   }
 }

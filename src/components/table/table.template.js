@@ -3,13 +3,17 @@ const Head = {
   Z: 'Z'.codePointAt(),
 }
 
+const createResizer = () => '<div class="table__resizer"></div>'
+
 const createHead = (head) => {
   return `
-    <div class="table__cell table__head cell">${head}</div>`
+    <div class="table__cell table__head cell">
+      ${head}
+      ${createResizer()}
+    </div>`
 }
 
-const createHeads = () => {
-  const headsCount = Head.Z - Head.A + 1
+const createHeads = (headsCount = Head.Z - Head.A + 1) => {
   const heads = Array.from({ length: headsCount }, (_, index) => {
     return String.fromCodePoint(Head.A + index)
   })
@@ -27,18 +31,23 @@ const createCells = (cells = ['Exc1', 'Exc2', 'Exc3']) => {
 }
 
 const createRow = (info, data) => {
+  const resizer = info ? createResizer() : ''
+
   return `
     <div class="table__row">
-      <div class="table__info cell">${info}</div>
+      <div class="table__info cell">
+        ${info}
+        ${resizer}
+      </div>
       <div class="table__data">
         ${data}
       </div>
     </div>`
 }
 
-const createServiceRow = () => {
+const createServiceRow = (headsCount) => {
   const info = ''
-  const data = createHeads()
+  const data = createHeads(headsCount)
 
   return createRow(info, data)
 }
@@ -59,7 +68,7 @@ const createMainRows = (rows) => {
 }
 
 const createTable = (rows = [['', '', ''], ['', '', ''], ['', '', '']]) => {
-  const serviceRow = createServiceRow()
+  const serviceRow = createServiceRow(rows[0].length)
   const mainRows = createMainRows(rows)
 
   return [serviceRow, ...mainRows].join('')
