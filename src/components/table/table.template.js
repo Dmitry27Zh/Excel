@@ -3,13 +3,13 @@ const Head = {
   Z: 'Z'.codePointAt(),
 }
 
-const createResizer = () => '<div class="table__resizer"></div>'
+const createResizer = (type) => `<div class="table__resizer" data-resize="${type}"></div>`
 
 const createHead = (head) => {
   return `
     <div class="table__cell table__head cell">
       ${head}
-      ${createResizer()}
+      ${createResizer('col')}
     </div>`
 }
 
@@ -31,7 +31,7 @@ const createCells = (cells = ['Exc1', 'Exc2', 'Exc3']) => {
 }
 
 const createRow = (info, data) => {
-  const resizer = info ? createResizer() : ''
+  const resizer = info ? createResizer('row') : ''
 
   return `
     <div class="table__row">

@@ -19,8 +19,10 @@ export class Table extends ExcelComponent {
     return createTable()
   }
 
-  onMousedown() {
-    console.log('mousedown')
+  onMousedown(event) {
+    if (event.target.dataset.resize) {
+      console.log('Resize!', event.target.dataset.resize)
+    }
   }
 
   onMousemove() {
