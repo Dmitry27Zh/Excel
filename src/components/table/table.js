@@ -9,6 +9,8 @@ export class Table extends ExcelComponent {
       name: 'Table',
       eventTypes: ['click', 'mousedown'],
     })
+
+    this.$box = $root.$el.firstElementChild
   }
 
   onClick(event) {
@@ -21,7 +23,15 @@ export class Table extends ExcelComponent {
 
   onMousedown(event) {
     if (event.target.dataset.resize) {
-      console.log('mousedown')
+      event.preventDefault()
+      this.$root.$el.style.setProperty(
+          '--table-height',
+          this.$box.offsetHeight
+      )
+      this.$root.$el.style.setProperty(
+          '--table-width',
+          this.$box.offsetWidth
+      )
       this.addListener('mousemove')
       this.addListener('mouseup')
     }
@@ -33,7 +43,14 @@ export class Table extends ExcelComponent {
 
   onMouseup() {
     console.log('mouseup')
-
+    this.$root.$el.style.setProperty(
+        '--table-height',
+        null
+    )
+    this.$root.$el.style.setProperty(
+        '--table-width',
+        null
+    )
     this.removeListener('mousemove')
     this.removeListener('mouseup')
   }

@@ -71,7 +71,7 @@ const createTable = (rows = [['', '', ''], ['', '', ''], ['', '', '']]) => {
   const serviceRow = createServiceRow(rows[0].length)
   const mainRows = createMainRows(rows)
 
-  return [serviceRow, ...mainRows].join('')
+  return `<div class="table__box">${[serviceRow, ...mainRows].join('')}</div>`
 }
 
 export { createTable }
