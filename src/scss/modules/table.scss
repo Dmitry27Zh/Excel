@@ -1,10 +1,11 @@
 .table {
   flex: 1;
+  display: flex;
+  align-items: flex-start;
   overflow-x: auto;
 
   &__row {
     display: flex;
-    width: fit-content;
   }
 
   &__info {
@@ -18,9 +19,15 @@
     }
 
     .table__resizer {
-      left: 0;
-      height: $height-resizer;
+      left: calc(#{$size-cell-border} * -1);
+      height: $size-resizer;
       cursor: row-resize;
+
+      &::after {
+        bottom: calc(#{$size-cell-border} * -1);
+        width: calc(var(--table-width) * 1px);
+        height: $size-resizer-extra;
+      }
     }
   }
 
@@ -43,21 +50,51 @@
     background: $color-bg-column-head;
 
     .table__resizer {
-      top: 0;
-      width: $width-resizer;
+      top: calc(#{$size-cell-border} * -1);
+      width: $size-resizer;
       cursor: col-resize;
+
+      &::after {
+        right: calc(#{$size-cell-border} * -1);
+        width: $size-resizer-extra;
+        height: calc(var(--table-height) * 1px);
+      }
     }
   }
 
   &__resizer {
     position: absolute;
-    right: 0;
-    bottom: 0;
-    background: $color-border-cell-active;
+    right: calc(#{$size-cell-border} * -1);
+    bottom: calc(#{$size-cell-border} * -1);
     opacity: 0;
+
+    &::before {
+      z-index: 1;
+      position: absolute;
+      inset: 0;
+      background: $color-border-cell-active;
+      content: '';
+    }
+
+    &::after {
+      position: absolute;
+      top: calc(#{$size-cell-border} * -1);
+      left: calc(#{$size-cell-border} * -1);
+      margin: auto;
+      background: $color-resizer-extra;
+      opacity: 0;
+      pointer-events: none;
+      content: '';
+    }
 
     &:hover {
       opacity: 1;
+    }
+
+    &:active {
+      &::after {
+        opacity: 1;
+      }
     }
   }
 }

@@ -6,5 +6,5 @@
   min-height: $height-cell;
   padding: 10px;
   background: #ffffff;
-  border: 1px solid $color-border-cell;
+  border: $size-cell-border solid $color-border-cell;
 }
