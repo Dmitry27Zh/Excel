@@ -1,5 +1,6 @@
 import { DOMListener } from '@core/dom-listener'
 import { capitalize } from '@core/utils'
+import { bindAll } from '@core/utils'
 
 export class ExcelComponent extends DOMListener {
   static tagName = 'div'
@@ -10,7 +11,7 @@ export class ExcelComponent extends DOMListener {
     super($root, options.eventTypes)
     this.name = options.name
 
-    this.bindListeners()
+    bindAll(this, this)
   }
 
   init() {
@@ -23,21 +24,6 @@ export class ExcelComponent extends DOMListener {
 
   static getListenerName = (eventType) => {
     return `on${capitalize(eventType)}`
-  }
-
-  bindListeners() {
-    this.eventTypes.forEach((eventType) => {
-      const listenerName = ExcelComponent.getListenerName(eventType)
-      const listener = this[listenerName]?.bind(this)
-
-      if (!listener) {
-        throw new Error(
-            `Listener ${listenerName} is not implemented in ${this.name} Component`
-        )
-      }
-
-      this[listenerName] = listener
-    })
   }
 
   toHTML() {
