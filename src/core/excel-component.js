@@ -11,6 +11,7 @@ export class ExcelComponent extends DOMListener {
     super($root, options.eventTypes)
     this.name = options.name
 
+    this.$root.html(this.toHTML())
     bindAll(this, this)
   }
 
