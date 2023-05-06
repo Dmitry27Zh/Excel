@@ -68,20 +68,24 @@ export class Table extends ExcelComponent {
   }
 
   resize(event) {
-    this.resizer.geometry.move.x = event.clientX -
+    if (this.checkResizeArea(event)) {
+      this.resizer.geometry.move.x = event.clientX -
       this.resizer.geometry.startCoords.x
-    this.resizer.geometry.move.y = event.clientY -
+      this.resizer.geometry.move.y = event.clientY -
       this.resizer.geometry.startCoords.y
 
-    const { x, y } = this.resizer.geometry.move
+      const { x, y } = this.resizer.geometry.move
 
-    switch (this.resizer.$el.dataset.resize) {
-      case 'col':
-        this.resizer.$el.style.transform = `translateX(${x}px)`
-        break
-      case 'row':
-        this.resizer.$el.style.transform = `translateY(${y}px)`
-        break
+      switch (this.resizer.$el.dataset.resize) {
+        case 'col':
+          this.resizer.$el.style.transform = `translateX(${x}px)`
+          break
+        case 'row':
+          this.resizer.$el.style.transform = `translateY(${y}px)`
+          break
+      }
+    } else {
+      this.stopResize()
     }
   }
 
