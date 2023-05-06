@@ -63,6 +63,7 @@
   }
 
   &__resizer {
+    z-index: 1;
     position: absolute;
     right: calc(#{$size-cell-border} * -1);
     bottom: calc(#{$size-cell-border} * -1);
