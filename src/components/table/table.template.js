@@ -3,7 +3,7 @@ const Head = {
   Z: 'Z'.codePointAt(),
 }
 
-const createResizer = (type) => `<div class="table__resizer" data-resize="${type}"></div>`
+const createResizer = (type) => `<div class="table__resizer" data-resizer="${type}"></div>`
 
 const createHead = (head) => {
   return `

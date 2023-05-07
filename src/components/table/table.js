@@ -35,7 +35,7 @@ export class Table extends ExcelComponent {
   }
 
   onMousedown(event) {
-    if (event.target.dataset.resize) {
+    if (event.target.dataset.resizer) {
       this.startResize(event)
     }
   }
@@ -44,12 +44,12 @@ export class Table extends ExcelComponent {
     this.resize(event)
   }
 
-  onMouseup() {
-    this.stopResize()
+  onMouseup(event) {
+    this.stopResize(event)
   }
 
-  onMouseleave() {
-    this.stopResize()
+  onMouseleave(event) {
+    this.stopResize(event)
   }
 
   startResize(event) {
@@ -74,6 +74,7 @@ export class Table extends ExcelComponent {
   }
 
   resize(event) {
+    event.preventDefault()
     this.resizer.geometry.move.x = event.clientX -
       this.resizer.geometry.startCoords.x
     this.resizer.geometry.move.y = event.clientY -
@@ -81,7 +82,7 @@ export class Table extends ExcelComponent {
 
     const { x, y } = this.resizer.geometry.move
 
-    switch (this.resizer.$el.dataset.resize) {
+    switch (this.resizer.$el.dataset.resizer) {
       case 'col':
         this.resizer.$el.style.transform = `translateX(${x}px)`
         break
@@ -91,7 +92,8 @@ export class Table extends ExcelComponent {
     }
   }
 
-  stopResize() {
+  stopResize(event) {
+    event.preventDefault()
     this.$root.$el.style.setProperty(
         '--table-height',
         null
