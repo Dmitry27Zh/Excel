@@ -88,7 +88,8 @@
       content: '';
     }
 
-    &:hover {
+    &:hover,
+    &.is-active {
       opacity: 1;
     }
 

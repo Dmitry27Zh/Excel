@@ -48,6 +48,10 @@ export class Table extends ExcelComponent {
     this.stopResize()
   }
 
+  onMouseleave() {
+    this.stopResize()
+  }
+
   startResize(event) {
     event.preventDefault()
     this.$root.$el.style.setProperty(
@@ -63,29 +67,27 @@ export class Table extends ExcelComponent {
       x: event.clientX,
       y: event.clientY,
     }
+    this.resizer.$el.classList.add('is-active')
     this.addListener('mousemove')
     this.addListener('mouseup')
+    this.addListener('mouseleave')
   }
 
   resize(event) {
-    if (this.checkResizeArea(event)) {
-      this.resizer.geometry.move.x = event.clientX -
+    this.resizer.geometry.move.x = event.clientX -
       this.resizer.geometry.startCoords.x
-      this.resizer.geometry.move.y = event.clientY -
+    this.resizer.geometry.move.y = event.clientY -
       this.resizer.geometry.startCoords.y
 
-      const { x, y } = this.resizer.geometry.move
+    const { x, y } = this.resizer.geometry.move
 
-      switch (this.resizer.$el.dataset.resize) {
-        case 'col':
-          this.resizer.$el.style.transform = `translateX(${x}px)`
-          break
-        case 'row':
-          this.resizer.$el.style.transform = `translateY(${y}px)`
-          break
-      }
-    } else {
-      this.stopResize()
+    switch (this.resizer.$el.dataset.resize) {
+      case 'col':
+        this.resizer.$el.style.transform = `translateX(${x}px)`
+        break
+      case 'row':
+        this.resizer.$el.style.transform = `translateY(${y}px)`
+        break
     }
   }
 
@@ -99,6 +101,7 @@ export class Table extends ExcelComponent {
         null
     )
     this.resizer.$el.style.transform = null
+    this.resizer.$el.classList.remove('is-active')
     this.resizer.$el = null
     this.resizer.geometry.startCoords = {
       x: 0,
@@ -110,14 +113,6 @@ export class Table extends ExcelComponent {
     }
     this.removeListener('mousemove')
     this.removeListener('mouseup')
-  }
-
-  checkResizeArea(event) {
-    const elementsUnderPointer = document.elementsFromPoint(
-        event.clientX,
-        event.clientY
-    )
-
-    return elementsUnderPointer.includes(this.$box)
+    this.removeListener('mouseleave')
   }
 }
