@@ -18,7 +18,8 @@
         "ignoreTemplateLiterals": true
       }
     ],
-    "no-prototype-builtins": "off"
+    "no-prototype-builtins": "off",
+    "no-invalid-this": "off"
   },
   "extends": ["eslint:recommended", "google"]
 }

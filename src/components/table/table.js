@@ -1,5 +1,6 @@
 import { ExcelComponent } from '@core/excel-component';
 import { createTable } from '@/components/table/table.template';
+import { throttle } from '../../core/utils';
 
 export class Table extends ExcelComponent {
   static className = 'excel__table table'
@@ -13,6 +14,7 @@ export class Table extends ExcelComponent {
     this.$box = $root.$el.firstElementChild
     this.resizer = {
       $el: null,
+      timeout: 30,
       geometry: {
         startCoords: {
           x: 0,
@@ -24,6 +26,8 @@ export class Table extends ExcelComponent {
         },
       },
     }
+
+    this.resize = throttle(this.resize, this.resizer.timeout)
   }
 
   onClick(event) {
@@ -75,20 +79,23 @@ export class Table extends ExcelComponent {
 
   resize(event) {
     event.preventDefault()
-    this.resizer.geometry.move.x = event.clientX -
+
+    if (this.resizer.$el) {
+      this.resizer.geometry.move.x = event.clientX -
       this.resizer.geometry.startCoords.x
-    this.resizer.geometry.move.y = event.clientY -
+      this.resizer.geometry.move.y = event.clientY -
       this.resizer.geometry.startCoords.y
 
-    const { x, y } = this.resizer.geometry.move
+      const { x, y } = this.resizer.geometry.move
 
-    switch (this.resizer.$el.dataset.resizer) {
-      case 'col':
-        this.resizer.$el.style.transform = `translateX(${x}px)`
-        break
-      case 'row':
-        this.resizer.$el.style.transform = `translateY(${y}px)`
-        break
+      switch (this.resizer.$el.dataset.resizer) {
+        case 'col':
+          this.resizer.$el.style.transform = `translateX(${x}px)`
+          break
+        case 'row':
+          this.resizer.$el.style.transform = `translateY(${y}px)`
+          break
+      }
     }
   }
 

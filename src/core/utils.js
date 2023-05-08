@@ -44,4 +44,37 @@ const bindAll = (obj, targetThis) => {
   bindAllMethods(obj)
 }
 
-export { capitalize, bindAll }
+const throttle = (cb, timeout) => {
+  let lastThis = null
+  let lastArguments = []
+  let hasThrottled = false
+  let hasSkipped = false
+
+  return function throttledCb(...args) {
+    lastThis = this
+    lastArguments = args
+
+    if (hasThrottled) {
+      hasSkipped = true
+
+      return
+    }
+
+    cb.apply(lastThis, lastArguments)
+    hasThrottled = true
+
+    setTimeout(() => {
+      hasThrottled = false
+
+      if (hasSkipped) {
+        throttledCb.apply(lastThis, lastArguments)
+        hasSkipped = false
+      } else {
+        lastThis = null
+        lastArguments = []
+      }
+    }, timeout)
+  }
+}
+
+export { capitalize, bindAll, throttle }
