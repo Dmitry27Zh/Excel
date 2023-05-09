@@ -27,6 +27,19 @@ export class Table extends ExcelComponent {
       },
     }
 
+    this.$cells = [...this.$box.querySelectorAll('.cell[data-col]')],
+    this.$cols = this.$cells.reduce((result, $cell) => {
+      const colNumber = $cell.dataset.col
+
+      if (result[colNumber]) {
+        result[colNumber].push($cell)
+      } else {
+        result[colNumber] = [$cell]
+      }
+
+      return result
+    }, [])
+
     this.moveResizer = throttle(this.moveResizer, this.resizer.timeout)
   }
 
@@ -108,9 +121,7 @@ export class Table extends ExcelComponent {
 
     switch (type) {
       case 'col':
-        const currentCellWidth = $cell.offsetWidth
-        const newCellWidth = currentCellWidth + this.resizer.geometry.move.x
-        $cell.style.width = `${newCellWidth}px`
+        this.resizeCol($cell)
         break
       case 'row':
         const currentRowHeight = $cell.offsetHeight
@@ -120,6 +131,14 @@ export class Table extends ExcelComponent {
       default:
         throw new Error(`Unknown type of resizer!`)
     }
+  }
+
+  resizeCol($cell) {
+    const currentCellWidth = $cell.offsetWidth
+    const newCellWidth = currentCellWidth + this.resizer.geometry.move.x
+    const colNumber = $cell.dataset.col
+    const $cellsInCol = this.$cols[colNumber]
+    $cellsInCol.forEach(($cell) => $cell.style.width = `${newCellWidth}px`)
   }
 
   stopResize(event) {

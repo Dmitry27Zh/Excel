@@ -5,9 +5,9 @@ const Head = {
 
 const createResizer = (type) => `<div class="table__resizer" data-resizer="${type}"></div>`
 
-const createHead = (head) => {
+const createHead = (head, colNumber) => {
   return `
-    <div class="table__cell table__head cell">
+    <div class="table__cell table__head cell" data-col="${colNumber}">
       ${head}
       ${createResizer('col')}
     </div>`
@@ -21,9 +21,9 @@ const createHeads = (headsCount = Head.Z - Head.A + 1) => {
   return heads.map(createHead).join('')
 }
 
-const createCell = (cell) => {
+const createCell = (cell, colNumber) => {
   return `
-    <div class="table__cell cell" contenteditable>${cell}</div>`
+    <div class="table__cell cell" contenteditable data-col="${colNumber}">${cell}</div>`
 }
 
 const createCells = (cells = ['Exc1', 'Exc2', 'Exc3']) => {
