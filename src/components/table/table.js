@@ -27,7 +27,7 @@ export class Table extends ExcelComponent {
       },
     }
 
-    this.resize = throttle(this.resize, this.resizer.timeout)
+    this.moveResizer = throttle(this.moveResizer, this.resizer.timeout)
   }
 
   onClick(event) {
@@ -45,7 +45,7 @@ export class Table extends ExcelComponent {
   }
 
   onMousemove(event) {
-    this.resize(event)
+    this.moveResizer(event)
   }
 
   onMouseup(event) {
@@ -77,7 +77,7 @@ export class Table extends ExcelComponent {
     this.addListener('mouseleave')
   }
 
-  resize(event) {
+  moveResizer(event) {
     event.preventDefault()
 
     if (this.resizer.$el) {
@@ -87,20 +87,44 @@ export class Table extends ExcelComponent {
       this.resizer.geometry.startCoords.y
 
       const { x, y } = this.resizer.geometry.move
+      const type = this.resizer.$el.dataset.resizer
 
-      switch (this.resizer.$el.dataset.resizer) {
+      switch (type) {
         case 'col':
           this.resizer.$el.style.transform = `translateX(${x}px)`
           break
         case 'row':
           this.resizer.$el.style.transform = `translateY(${y}px)`
           break
+        default:
+          throw new Error(`Unknown type of resizer!`)
       }
+    }
+  }
+
+  resize() {
+    const $cell = this.resizer.$el.parentElement
+    const type = this.resizer.$el.dataset.resizer
+
+    switch (type) {
+      case 'col':
+        const currentCellWidth = $cell.offsetWidth
+        const newCellWidth = currentCellWidth + this.resizer.geometry.move.x
+        $cell.style.width = `${newCellWidth}px`
+        break
+      case 'row':
+        const currentRowHeight = $cell.offsetHeight
+        const newCellHeight = currentRowHeight + this.resizer.geometry.move.y
+        $cell.style.height = `${newCellHeight}px`
+        break
+      default:
+        throw new Error(`Unknown type of resizer!`)
     }
   }
 
   stopResize(event) {
     event.preventDefault()
+    this.resize()
     this.$root.$el.style.setProperty(
         '--table-height',
         null
