@@ -27,14 +27,35 @@ export class Table extends ExcelComponent {
       },
     }
 
-    this.$cells = [...this.$box.querySelectorAll('.cell[data-col]')],
+    this.$cells = [...this.$box.querySelectorAll(
+        '.cell:is([data-col], [data-row])'
+    )],
     this.$cols = this.$cells.reduce((result, $cell) => {
       const colNumber = $cell.dataset.col
+
+      if (!colNumber) {
+        return result
+      }
 
       if (result[colNumber]) {
         result[colNumber].push($cell)
       } else {
         result[colNumber] = [$cell]
+      }
+
+      return result
+    }, [])
+    this.$rows = this.$cells.reduce((result, $cell) => {
+      const rowNumber = $cell.dataset.row
+
+      if (!rowNumber) {
+        return result
+      }
+
+      if (result[rowNumber]) {
+        result[rowNumber].push($cell)
+      } else {
+        result[rowNumber] = [$cell]
       }
 
       return result
@@ -124,9 +145,7 @@ export class Table extends ExcelComponent {
         this.resizeCol($cell)
         break
       case 'row':
-        const currentRowHeight = $cell.offsetHeight
-        const newCellHeight = currentRowHeight + this.resizer.geometry.move.y
-        $cell.style.height = `${newCellHeight}px`
+        this.resizeRow($cell)
         break
       default:
         throw new Error(`Unknown type of resizer!`)
@@ -139,6 +158,14 @@ export class Table extends ExcelComponent {
     const colNumber = $cell.dataset.col
     const $cellsInCol = this.$cols[colNumber]
     $cellsInCol.forEach(($cell) => $cell.style.width = `${newCellWidth}px`)
+  }
+
+  resizeRow($cell) {
+    const currentRowHeight = $cell.offsetHeight
+    const newCellHeight = currentRowHeight + this.resizer.geometry.move.y
+    const rowNumber = $cell.dataset.row
+    const $cellsInRow = this.$rows[rowNumber]
+    $cellsInRow.forEach(($cell) => $cell.style.height = `${newCellHeight}px`)
   }
 
   stopResize(event) {
