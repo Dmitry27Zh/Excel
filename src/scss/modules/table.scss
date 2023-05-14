@@ -1,10 +1,19 @@
 .table {
   flex: 1;
+  display: flex;
+  align-items: flex-start;
   overflow-x: auto;
+
+  &:has(.table__resizer[data-resizer='col'].is-active) {
+    cursor: col-resize;
+  }
+
+  &:has(.table__resizer[data-resizer='row'].is-active) {
+    cursor: row-resize;
+  }
 
   &__row {
     display: flex;
-    width: fit-content;
   }
 
   &__info {
@@ -15,6 +24,22 @@
 
     &:empty {
       box-shadow: inset 0 -2px 2px rgba(0, 0, 0, 0.5);
+    }
+
+    &:has(.table__resizer.is-active) {
+      z-index: 1;
+    }
+
+    .table__resizer {
+      left: calc(#{$size-cell-border} * -1);
+      height: $size-resizer;
+      cursor: row-resize;
+
+      &::after {
+        bottom: calc(#{$size-cell-border} * -1);
+        width: calc(var(--table-width) * 1px);
+        height: $size-resizer-extra;
+      }
     }
   }
 
@@ -32,7 +57,58 @@
   }
 
   &__head {
+    position: relative;
     justify-content: center;
     background: $color-bg-column-head;
+
+    .table__resizer {
+      top: calc(#{$size-cell-border} * -1);
+      width: $size-resizer;
+      cursor: col-resize;
+
+      &::after {
+        right: calc(#{$size-cell-border} * -1);
+        width: $size-resizer-extra;
+        height: calc(var(--table-height) * 1px);
+      }
+    }
+  }
+
+  &__resizer {
+    z-index: 1;
+    position: absolute;
+    right: calc(#{$size-cell-border} * -1);
+    bottom: calc(#{$size-cell-border} * -1);
+    opacity: 0;
+
+    &::before {
+      z-index: 1;
+      position: absolute;
+      inset: 0;
+      background: $color-border-cell-active;
+      content: '';
+    }
+
+    &::after {
+      position: absolute;
+      top: calc(#{$size-cell-border} * -1);
+      left: calc(#{$size-cell-border} * -1);
+      margin: auto;
+      background: $color-resizer-extra;
+      opacity: 0;
+      pointer-events: none;
+      content: '';
+    }
+
+    &:hover,
+    &.is-active {
+      opacity: 1;
+    }
+
+    &:active {
+      &::after {
+        opacity: 1;
+      }
+    }
   }
 }

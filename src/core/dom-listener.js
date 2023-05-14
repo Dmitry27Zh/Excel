@@ -10,19 +10,37 @@ export class DOMListener {
     this.eventTypes = eventTypes
   }
 
+  addListener(eventType) {
+    const listenerName = ExcelComponent.getListenerName(eventType)
+    const listener = this[listenerName]
+
+    if (!listener) {
+      throw new Error(
+          `Listener ${listenerName} is not implemented in ${this.name} Component`
+      )
+    }
+
+    this.$root.on(eventType, listener)
+  }
+
+  removeListener(eventType) {
+    const listenerName = ExcelComponent.getListenerName(eventType)
+    const listener = this[listenerName]
+
+    if (!listener) {
+      throw new Error(
+          `Listener ${listenerName} is not implemented in ${this.name} Component`
+      )
+    }
+
+    this.$root.off(eventType, listener)
+  }
+
   addListeners() {
-    this.eventTypes.forEach((eventType) => {
-      const listenerName = ExcelComponent.getListenerName(eventType)
-      const listener = this[listenerName]
-      this.$root.on(eventType, listener)
-    })
+    this.eventTypes.forEach(this.addListener, this)
   }
 
   removeListeners() {
-    this.eventTypes.forEach((eventType) => {
-      const listenerName = ExcelComponent.getListenerName(eventType)
-      const listener = this[listenerName]
-      this.$root.off(eventType, listener)
-    })
+    this.eventTypes.forEach(this.removeListener, this)
   }
 }

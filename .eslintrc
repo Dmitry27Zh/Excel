@@ -17,7 +17,10 @@
       {
         "ignoreTemplateLiterals": true
       }
-    ]
+    ],
+    "no-prototype-builtins": "off",
+    "no-invalid-this": "off",
+    "no-case-declarations": "off"
   },
   "extends": ["eslint:recommended", "google"]
 }
