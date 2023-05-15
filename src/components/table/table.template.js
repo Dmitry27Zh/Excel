@@ -3,44 +3,64 @@ const Head = {
   Z: 'Z'.codePointAt(),
 }
 
+const createCell = (
+    data,
+    colNumber,
+    rowNumber,
+    contenteditable = 'true',
+    extraClassName = 'table__cell',
+) => {
+  return `
+    <div class="cell ${extraClassName}" contenteditable="${contenteditable}"
+      data-col="${colNumber}" data-row="${rowNumber}">${data}</div>`
+}
+
 const createResizer = (type) => `<div class="table__resizer" data-resizer="${type}"></div>`
 
-const createHead = (head, colNumber) => {
-  return `
-    <div class="table__cell table__head cell" data-col="${colNumber}">
-      ${head}
-      ${createResizer('col')}
-    </div>`
+const createHead = (headData, colNumber) => {
+  const resizer = createResizer('col')
+  const cellData = `${headData}${resizer}`
+  const extraClassName = 'table__cell table__head'
+  const rowNumber = ''
+  const contenteditable = 'false'
+
+  return createCell(
+      cellData,
+      colNumber,
+      rowNumber,
+      contenteditable,
+      extraClassName
+  )
 }
 
 const createHeads = (headsCount = Head.Z - Head.A + 1) => {
-  const heads = Array.from({ length: headsCount }, (_, index) => {
+  const headsData = Array.from({ length: headsCount }, (_, index) => {
     return String.fromCodePoint(Head.A + index)
   })
 
-  return heads.map(createHead).join('')
+  return headsData.map(createHead).join('')
 }
 
-const createCell = (cell, colNumber, rowNumber) => {
-  return `
-    <div class="table__cell cell" contenteditable data-col="${colNumber}" data-row="${rowNumber}">${cell}</div>`
+const createInfo = (infoData, rowNumber) => {
+  const resizer = infoData ? createResizer('row') : ''
+  const cellData = `${infoData}${resizer}`
+  const extraClassName = 'table__info'
+  const colNumber = ''
+  const contenteditable = 'false'
+
+  return createCell(
+      cellData,
+      colNumber,
+      rowNumber,
+      contenteditable,
+      extraClassName
+  )
 }
 
-const createCells = (cells = ['Exc1', 'Exc2', 'Exc3'], rowNumber) => {
-  return cells
-      .map((cell, colNumber) => createCell(cell, colNumber, rowNumber))
-      .join('')
-}
-
-const createRow = (info, data, rowNumber = '') => {
-  const resizer = info ? createResizer('row') : ''
-
+const createRow = (infoData, data, rowNumber = '') => {
   return `
     <div class="table__row">
-      <div class="table__info cell" data-row="${rowNumber}">
-        ${info}
-        ${resizer}
-      </div>
+      ${createInfo(infoData, rowNumber)}
       <div class="table__data">
         ${data}
       </div>
@@ -52,6 +72,12 @@ const createServiceRow = (headsCount) => {
   const data = createHeads(headsCount)
 
   return createRow(info, data)
+}
+
+const createCells = (cellsData = ['Exc1', 'Exc2', 'Exc3'], rowNumber) => {
+  return cellsData
+      .map((cellData, colNumber) => createCell(cellData, colNumber, rowNumber))
+      .join('')
 }
 
 const createMainRow = (info, cells, rowNumber) => {
