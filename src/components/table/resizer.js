@@ -2,6 +2,7 @@ import { throttle } from '@core/utils';
 
 export class Resizer {
   static TIMEOUT = 30
+  static isResizer = ($el) => !!$el.dataset.resizer
 
   constructor(table) {
     this.table = table

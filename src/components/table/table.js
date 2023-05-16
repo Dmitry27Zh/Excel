@@ -3,7 +3,7 @@ import { createTable } from '@/components/table/table.template';
 import { Resizer } from '@/components/table/resizer';
 
 export class Table extends ExcelComponent {
-  static className = 'excel__table table'
+  static CLASS_NAME = 'excel__table table'
 
   constructor($root) {
     super($root, {
@@ -53,7 +53,7 @@ export class Table extends ExcelComponent {
   }
 
   onMousedown(event) {
-    if (event.target.dataset.resizer) {
+    if (Resizer.isResizer(event.target)) {
       this.resizer.start(event)
     }
   }

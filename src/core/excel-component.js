@@ -3,7 +3,7 @@ import { capitalize } from '@core/utils'
 import { bindAll } from '@core/utils'
 
 export class ExcelComponent extends DOMListener {
-  static tagName = 'div'
+  static TAG_NAME = 'div'
 
   constructor($root, options = {
     name: new.target.name,

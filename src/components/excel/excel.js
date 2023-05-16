@@ -10,7 +10,7 @@ export class Excel {
     const $root = $.create('div', 'excel')
 
     this.components = this.components.map((Component) => {
-      const $el = $.create(Component.tagName, Component.className)
+      const $el = $.create(Component.TAG_NAME, Component.CLASS_NAME)
       const component = new Component($el)
       $root.append($el)
       return component

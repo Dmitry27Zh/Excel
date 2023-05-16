@@ -1,7 +1,7 @@
 import { ExcelComponent } from '@core/excel-component';
 
 export class Toolbar extends ExcelComponent {
-  static className = 'excel__toolbar toolbar'
+  static CLASS_NAME = 'excel__toolbar toolbar'
 
   toHTML() {
     return `

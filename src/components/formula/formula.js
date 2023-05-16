@@ -1,7 +1,7 @@
 import { ExcelComponent } from '@core/excel-component';
 
 export class Formula extends ExcelComponent {
-  static className = 'excel__formula formula'
+  static CLASS_NAME = 'excel__formula formula'
 
   constructor($root) {
     super($root, {
