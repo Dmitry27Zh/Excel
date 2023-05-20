@@ -13,7 +13,7 @@ export class Formula extends ExcelComponent {
   toHTML() {
     return `
       <div class="formula__container">
-        <div class="formula__info info cell">fx</div>
+        <div class="formula__info info cell"><div class="cell__data">fx</div></div>
         <div class="formula__input input">
           <input class="formula__input-element input__element" type="text" />
         </div>

@@ -1,4 +1,5 @@
 import { throttle } from '@core/utils';
+import { Table } from './table';
 
 export class Resizer {
   static TIMEOUT = 30
@@ -64,7 +65,7 @@ export class Resizer {
   }
 
   resize() {
-    const $cell = this.$el.parentElement
+    const $cell = this.$el.closest(Table.Selector.RESIZE)
     const type = this.$el.dataset.resizer
 
     switch (type) {
@@ -83,16 +84,18 @@ export class Resizer {
     const currentCellWidth = $cell.offsetWidth
     const newCellWidth = currentCellWidth + this.offset.x
     const colNumber = $cell.dataset.col
-    const $cellsInCol = this.table.$cols[colNumber]
-    $cellsInCol.forEach(($cell) => $cell.style.width = `${newCellWidth}px`)
+    const $dataCellsInCol = this.table.$cols[colNumber]
+    const $cellsToResize = $dataCellsInCol.concat($cell)
+    $cellsToResize.forEach(($cell) => $cell.style.width = `${newCellWidth}px`)
   }
 
   resizeRow($cell) {
     const currentRowHeight = $cell.offsetHeight
     const newCellHeight = currentRowHeight + this.offset.y
     const rowNumber = $cell.dataset.row
-    const $cellsInRow = this.table.$rows[rowNumber]
-    $cellsInRow.forEach(($cell) => $cell.style.height = `${newCellHeight}px`)
+    const $dataCellsInRow = this.table.$rows[rowNumber]
+    const $cellsToResize = $dataCellsInRow.concat($cell)
+    $cellsToResize.forEach(($cell) => $cell.style.height = `${newCellHeight}px`)
   }
 
   stop(event) {

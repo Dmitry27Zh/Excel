@@ -4,6 +4,10 @@ import { Resizer } from '@/components/table/resizer';
 
 export class Table extends ExcelComponent {
   static CLASS_NAME = 'excel__table table'
+  static Selector = {
+    RESIZE: '[data-resize]',
+    DATA_CELL: '[data-cell]',
+  }
 
   constructor($root) {
     super($root, {
@@ -13,10 +17,10 @@ export class Table extends ExcelComponent {
 
     this.$box = $root.$el.firstElementChild
     this.resizer = new Resizer(this)
-    this.$cells = [...this.$box.querySelectorAll(
-        '.cell:is([data-col], [data-row])'
+    this.$dataCells = [...this.$box.querySelectorAll(
+        Table.Selector.DATA_CELL
     )],
-    this.$cols = this.$cells.reduce((result, $cell) => {
+    this.$cols = this.$dataCells.reduce((result, $cell) => {
       const colNumber = $cell.dataset.col
 
       if (!colNumber) {
@@ -31,7 +35,7 @@ export class Table extends ExcelComponent {
 
       return result
     }, {})
-    this.$rows = this.$cells.reduce((result, $cell) => {
+    this.$rows = this.$dataCells.reduce((result, $cell) => {
       const rowNumber = $cell.dataset.row
 
       if (!rowNumber) {
