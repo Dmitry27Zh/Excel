@@ -15,7 +15,10 @@ export class ExcelComponent extends DOMListener {
     bindAll(this, this)
   }
 
+  prepare() {}
+
   init() {
+    this.prepare()
     this.addListeners()
   }
 

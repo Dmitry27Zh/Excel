@@ -17,9 +17,12 @@ const createCell = (
   const dataCellAttr = colIndex == null || rowIndex == null ? '' : 'data-cell'
 
   return `
-    <div class="cell ${extraClassName}" ${resizeAttr} ${dataCellAttr} ${colAttr} ${rowAttr}>
-        <div class="cell__data" contenteditable="${contenteditable}">${content}</div>
-      </div>`
+    <div class="cell ${extraClassName}"
+        ${resizeAttr}
+        ${dataCellAttr}
+        ${colAttr}
+        ${rowAttr}
+        contenteditable="${contenteditable}"><div class="cell__data">${content}</div></div>`
 }
 
 const createResizer = (type) => `<div class="table__resizer" data-resizer="${type}"></div>`

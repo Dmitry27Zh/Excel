@@ -8,6 +8,13 @@
   background: #ffffff;
   border: $size-cell-border solid $color-border-cell;
 
+  &.selected,
+  &:focus {
+    border-color: $color-outline-cell;
+    outline: $width-cell-outline solid $color-outline-cell;
+    outline-offset: -$width-cell-outline;
+  }
+
   &__data {
     display: flex;
     justify-content: center;

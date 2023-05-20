@@ -1,12 +1,16 @@
 import { ExcelComponent } from '@core/excel-component';
 import { createTable } from '@/components/table/table.template';
 import { Resizer } from '@/components/table/resizer';
+import { TableSelection } from '@/components/table/TableSelection';
 
 export class Table extends ExcelComponent {
   static CLASS_NAME = 'excel__table table'
   static Selector = {
     RESIZE: '[data-resize]',
     DATA_CELL: '[data-cell]',
+  }
+  static ClassList = {
+    SELECTED: 'selected',
   }
 
   constructor($root) {
@@ -50,6 +54,16 @@ export class Table extends ExcelComponent {
 
       return result
     }, {})
+    this.selection = null
+  }
+
+  prepare() {
+    this.selection = new TableSelection()
+  }
+
+  init() {
+    super.init()
+    this.selection.select(this.$dataCells[0])
   }
 
   toHTML() {
