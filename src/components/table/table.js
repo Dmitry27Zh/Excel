@@ -58,12 +58,12 @@ export class Table extends ExcelComponent {
   }
 
   prepare() {
-    this.selection = new TableSelection()
+    this.selection = new TableSelection(this.$dataCells)
   }
 
   init() {
     super.init()
-    this.selection.select(this.$dataCells[0])
+    this.selection.init()
   }
 
   toHTML() {
