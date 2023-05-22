@@ -58,7 +58,7 @@ export class Table extends ExcelComponent {
   }
 
   prepare() {
-    this.selection = new TableSelection(this.$dataCells)
+    this.selection = new TableSelection(this.$dataCells, this.$cols)
   }
 
   init() {

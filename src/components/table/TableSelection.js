@@ -1,9 +1,11 @@
 import { Table } from '@/components/table/table';
+import { getRange } from '@core/utils';
 
 export class TableSelection {
-  constructor($dataCells) {
+  constructor($dataCells, $cols) {
     this.$dataCells = $dataCells
-    this.selected = null
+    this.$cols = $cols
+    this.current = null
     this.selectedGroup = new Set()
   }
 
@@ -13,30 +15,32 @@ export class TableSelection {
 
   startSelection($cell, shiftKey) {
     if (shiftKey) {
-      this.selectExtra($cell)
+      const { col, row } = $cell.dataset
+      const $cells = this.getGroup(col, row)
+      this.selectExtra($cells)
     } else {
       this.selectOnly($cell)
     }
   }
 
   select($cell) {
+    if (this.isSelected($cell)) {
+      return
+    }
+
     this.selectedGroup.add($cell)
     $cell.classList.add(Table.ClassList.SELECTED)
-
-    if ($cell.matches(':focus')) {
-      console.log('prev', this.selected)
-      this.selected = $cell
-      console.log('next', this.selected)
-    }
   }
 
   selectOnly($cell) {
-    this.unselectGroup()
+    this.unSelectAll()
     this.select($cell)
+    this.current = $cell
   }
 
-  selectExtra($cell) {
-    this.select($cell)
+  selectExtra($cells) {
+    this.unSelectExtra()
+    $cells.forEach(this.select, this)
   }
 
   unSelect($cell) {
@@ -47,16 +51,39 @@ export class TableSelection {
     this.selectedGroup.delete($cell)
     $cell.classList.remove(Table.ClassList.SELECTED)
 
-    if (this.selected === $cell) {
-      this.selected = null
+    if (this.current === $cell) {
+      this.current = null
     }
   }
 
-  selectGroup($cells) {
-    $cells.forEach(this.selectExtra, this)
+  unselectGroup($cells) {
+    $cells.forEach(this.unSelect, this)
   }
 
-  unselectGroup($cells = this.selectedGroup) {
-    $cells.forEach(this.unSelect, this)
+  unSelectAll() {
+    this.unselectGroup(this.selectedGroup)
+  }
+
+  unSelectExtra() {
+    const extra = new Set(this.selectedGroup)
+    extra.delete(this.current)
+    this.unselectGroup(extra)
+  }
+
+  isSelected($cell) {
+    return this.selectedGroup.has($cell)
+  }
+
+  getGroup(newCol, newRow) {
+    const { col, row } = this.current.dataset
+    const colRange = getRange(col, newCol)
+    const rowRange = getRange(row, newRow)
+
+    const groupCoords = colRange.reduce((result, colValue) => {
+      const currentCoords = rowRange.map((rowValue) => [colValue, rowValue])
+      return result.concat(currentCoords)
+    }, [])
+
+    return groupCoords.map(([col, row]) => this.$cols[col][row])
   }
 }

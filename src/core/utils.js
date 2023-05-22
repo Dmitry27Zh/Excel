@@ -77,4 +77,11 @@ const throttle = (cb, timeout) => {
   }
 }
 
+export const getRange = (a, b) => {
+  const min = Math.min(a, b)
+  const max = Math.max(a, b)
+
+  return Array.from({ length: max - min + 1 }, (_, index) => min + index)
+}
+
 export { capitalize, bindAll, throttle }
