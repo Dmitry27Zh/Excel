@@ -8,19 +8,35 @@ export class TableSelection {
   }
 
   init() {
-    this.select(this.$dataCells[0])
-    this.addListeners()
+    this.selectOnly(this.$dataCells[0])
+  }
+
+  startSelection($cell, shiftKey) {
+    if (shiftKey) {
+      this.selectExtra($cell)
+    } else {
+      this.selectOnly($cell)
+    }
   }
 
   select($cell) {
-    this.unselectGroup()
     this.selectedGroup.add($cell)
     $cell.classList.add(Table.ClassList.SELECTED)
 
     if ($cell.matches(':focus')) {
-      this.unSelect(this.selected)
+      console.log('prev', this.selected)
       this.selected = $cell
+      console.log('next', this.selected)
     }
+  }
+
+  selectOnly($cell) {
+    this.unselectGroup()
+    this.select($cell)
+  }
+
+  selectExtra($cell) {
+    this.select($cell)
   }
 
   unSelect($cell) {
@@ -37,16 +53,10 @@ export class TableSelection {
   }
 
   selectGroup($cells) {
-    $cells.forEach(this.select, this)
+    $cells.forEach(this.selectExtra, this)
   }
 
   unselectGroup($cells = this.selectedGroup) {
     $cells.forEach(this.unSelect, this)
-  }
-
-  addListeners() {
-    this.$dataCells.forEach(($dataCell) => {
-      $dataCell.addEventListener('focus', () => this.select($dataCell))
-    })
   }
 }

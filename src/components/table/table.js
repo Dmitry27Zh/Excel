@@ -16,7 +16,7 @@ export class Table extends ExcelComponent {
   constructor($root) {
     super($root, {
       name: 'Table',
-      eventTypes: ['mousedown'],
+      eventTypes: ['mousedown', 'click'],
     })
 
     this.$box = $root.$el.firstElementChild
@@ -86,5 +86,13 @@ export class Table extends ExcelComponent {
 
   onMouseleave(event) {
     this.resizer.stop(event)
+  }
+
+  onClick(event) {
+    const $dataCell = event.target.closest(Table.Selector.DATA_CELL)
+
+    if ($dataCell) {
+      this.selection.startSelection($dataCell, event.shiftKey)
+    }
   }
 }
