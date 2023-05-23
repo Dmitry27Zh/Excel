@@ -16,7 +16,7 @@ export class Table extends ExcelComponent {
   constructor($root) {
     super($root, {
       name: 'Table',
-      eventTypes: ['mousedown', 'click'],
+      eventTypes: ['mousedown', 'click', 'keydown'],
     })
 
     this.$box = $root.$el.firstElementChild
@@ -58,7 +58,7 @@ export class Table extends ExcelComponent {
   }
 
   prepare() {
-    this.selection = new TableSelection(this.$dataCells, this.$cols)
+    this.selection = new TableSelection(this.$dataCells, this.$cols, this.$rows)
   }
 
   init() {
@@ -92,7 +92,14 @@ export class Table extends ExcelComponent {
     const $dataCell = event.target.closest(Table.Selector.DATA_CELL)
 
     if ($dataCell) {
-      this.selection.startSelection($dataCell, event.shiftKey)
+      this.selection.startMouseSelection($dataCell, event.shiftKey)
+    }
+  }
+
+  onKeydown(event) {
+    if (TableSelection.KEYS.includes(event.key)) {
+      event.preventDefault()
+      this.selection.startKeyboardSelection(event.key)
     }
   }
 }

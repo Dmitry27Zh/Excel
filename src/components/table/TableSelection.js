@@ -1,19 +1,33 @@
 import { Table } from '@/components/table/table';
-import { getRange } from '@core/utils';
+import { getRange, clamp } from '@core/utils';
 
 export class TableSelection {
-  constructor($dataCells, $cols) {
+  static KEYS = [
+    'Tab',
+    'Enter',
+    'ArrowLeft',
+    'ArrowRight',
+    'ArrowUp',
+    'ArrowDown',
+  ]
+
+  constructor($dataCells, $cols, $rows) {
     this.$dataCells = $dataCells
     this.$cols = $cols
+    this.$rows = $rows
     this.current = null
     this.selectedGroup = new Set()
+    this.minCol = 0
+    this.minRow = 0
+    this.maxCol = Math.max(...Object.keys(this.$cols))
+    this.maxRow = Math.max(...Object.keys(this.$rows))
   }
 
   init() {
     this.selectOnly(this.$dataCells[0])
   }
 
-  startSelection($cell, shiftKey) {
+  startMouseSelection($cell, shiftKey) {
     if (shiftKey) {
       const { col, row } = $cell.dataset
       const $cells = this.getGroup(col, row)
@@ -21,6 +35,37 @@ export class TableSelection {
     } else {
       this.selectOnly($cell)
     }
+  }
+
+  startKeyboardSelection(key) {
+    let { col, row } = this.current.dataset
+    let $nextCell = null
+
+    switch (key) {
+      case 'Tab':
+        col++
+        break
+      case 'Enter':
+        row++
+        break
+      case 'ArrowLeft':
+        col--
+        break
+      case 'ArrowRight':
+        col++
+        break
+      case 'ArrowUp':
+        row--
+        break
+      case 'ArrowDown':
+        row++
+        break
+    }
+
+    col = clamp(col, this.minCol, this.maxCol)
+    row = clamp(row, this.minRow, this.maxRow)
+    $nextCell = this.$cols[col][row]
+    this.selectOnly($nextCell)
   }
 
   select($cell) {
@@ -36,6 +81,7 @@ export class TableSelection {
     this.unSelectAll()
     this.select($cell)
     this.current = $cell
+    this.current.focus()
   }
 
   selectExtra($cells) {
@@ -52,6 +98,7 @@ export class TableSelection {
     $cell.classList.remove(Table.ClassList.SELECTED)
 
     if (this.current === $cell) {
+      this.current.blur()
       this.current = null
     }
   }
