@@ -9,6 +9,13 @@ export class Observer {
     }
 
     this.listeners[event].push(listener)
+
+    const unsubscribe = () => {
+      this.listeners[event] = this.listeners[event]
+          .filter((subscribedListener) => subscribedListener != listener)
+    }
+
+    return unsubscribe
   }
 
   notify(event, data) {

@@ -13,6 +13,7 @@ export class ExcelComponent extends DOMListener {
     super($root, eventTypes)
     this.name = name ?? new.target.name
     this.observer = observer
+    this.unsubscribeList = []
 
     this.$root.html(this.toHTML())
     bindAll(this, this)
@@ -23,10 +24,12 @@ export class ExcelComponent extends DOMListener {
   init() {
     this.prepare()
     this.addListeners()
+    this.subscribe()
   }
 
   destroy() {
     this.removeListeners()
+    this.unsubscribe()
   }
 
   static getListenerName = (eventType) => {
@@ -35,5 +38,15 @@ export class ExcelComponent extends DOMListener {
 
   toHTML() {
     return ''
+  }
+
+  subscribe(listeners = {}) {
+    Object.entries(listeners).forEach(([event, listener]) => {
+      this.unsubscribeList.push(this.observer.subscribe(event, listener))
+    })
+  }
+
+  unsubscribe() {
+    this.unsubscribeList.forEach((unssubscribe) => unssubscribe())
   }
 }
