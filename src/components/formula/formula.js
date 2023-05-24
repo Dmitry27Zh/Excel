@@ -3,10 +3,11 @@ import { ExcelComponent } from '@core/excel-component';
 export class Formula extends ExcelComponent {
   static CLASS_NAME = 'excel__formula formula'
 
-  constructor($root) {
+  constructor($root, settings) {
     super($root, {
       name: 'Formula',
       eventTypes: ['input'],
+      ...settings,
     })
   }
 

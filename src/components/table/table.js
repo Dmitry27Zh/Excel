@@ -13,10 +13,11 @@ export class Table extends ExcelComponent {
     SELECTED: 'selected',
   }
 
-  constructor($root) {
+  constructor($root, settings) {
     super($root, {
       name: 'Table',
       eventTypes: ['mousedown', 'click', 'keydown'],
+      ...settings,
     })
 
     this.$box = $root.$el.firstElementChild

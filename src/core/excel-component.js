@@ -5,11 +5,14 @@ import { bindAll } from '@core/utils'
 export class ExcelComponent extends DOMListener {
   static TAG_NAME = 'div'
 
-  constructor($root, options = {
-    name: new.target.name,
+  constructor($root, {
+    eventTypes,
+    name,
+    observer,
   }) {
-    super($root, options.eventTypes)
-    this.name = options.name
+    super($root, eventTypes)
+    this.name = name ?? new.target.name
+    this.observer = observer
 
     this.$root.html(this.toHTML())
     bindAll(this, this)
