@@ -2,12 +2,14 @@ import { ExcelComponent } from '@core/excel-component';
 import { createTable } from '@/components/table/table.template';
 import { Resizer } from '@/components/table/resizer';
 import { TableSelection } from '@/components/table/TableSelection';
+import { $ } from '@core/dom'
 
 export class Table extends ExcelComponent {
   static CLASS_NAME = 'excel__table table'
   static Selector = {
     RESIZE: '[data-resize]',
     DATA_CELL: '[data-cell]',
+    CELL_DATA: '.cell__data',
   }
   static ClassList = {
     SELECTED: 'selected',
@@ -111,6 +113,7 @@ export class Table extends ExcelComponent {
   }
 
   write(text) {
-    this.selection.current.firstElementChild.textContent = text
+    const $cellData = $(this.selection.current).find(Table.Selector.CELL_DATA)
+    $cellData.write(text)
   }
 }

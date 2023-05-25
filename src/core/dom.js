@@ -35,6 +35,16 @@ class Dom {
     this.$el.append(node)
     return this
   }
+
+  find(selector) {
+    return $(this.$el.querySelector(selector))
+  }
+
+  write(text) {
+    this.$el.textContent = text
+
+    return this
+  }
 }
 
 export const $ = function(selector) {

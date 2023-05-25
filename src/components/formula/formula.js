@@ -22,6 +22,7 @@ export class Formula extends ExcelComponent {
   }
 
   onInput(event) {
-    this.observer.notify('Formula:input', event.target.value)
+    const text = event.target.value.trim()
+    this.observer.notify('Formula:input', text)
   }
 }
