@@ -1,5 +1,6 @@
 import { Table } from '@/components/table/table';
 import { getRange, clamp } from '@core/utils';
+import { $ } from '@core/dom';
 
 export class TableSelection {
   static KEYS = [
@@ -11,10 +12,11 @@ export class TableSelection {
     'ArrowDown',
   ]
 
-  constructor($dataCells, $cols, $rows) {
+  constructor($dataCells, $cols, $rows, observer) {
     this.$dataCells = $dataCells
     this.$cols = $cols
     this.$rows = $rows
+    this.observer = observer
     this.current = null
     this.selectedGroup = new Set()
     this.minCol = 0
@@ -82,6 +84,7 @@ export class TableSelection {
     this.select($cell)
     this.current = $cell
     this.current.focus()
+    this.observer.notify('Table:selection', $(this.current).text())
   }
 
   selectExtra($cells) {

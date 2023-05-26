@@ -15,7 +15,8 @@ export class Formula extends ExcelComponent {
 
     this.$input = this.$root.find(Formula.Selector.INPUT)
     this.listeners = {
-      'Table:input': (text) => this.$input.text(text),
+      'Table:input': this.write,
+      'Table:selection': this.write,
     }
   }
 
@@ -41,5 +42,9 @@ export class Formula extends ExcelComponent {
       event.preventDefault()
       this.observer.notify(`Formula:enter`)
     }
+  }
+
+  write(text) {
+    this.$input.text(text)
   }
 }
