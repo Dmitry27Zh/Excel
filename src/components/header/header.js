@@ -1,8 +1,8 @@
 import { ExcelComponent } from '@core/excel-component';
 
 export class Header extends ExcelComponent {
-  static tagName = 'header'
-  static className = 'excel__header header'
+  static TAG_NAME = 'header'
+  static CLASS_NAME = 'excel__header header'
 
   toHTML() {
     return `

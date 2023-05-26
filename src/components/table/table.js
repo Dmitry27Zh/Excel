@@ -1,22 +1,33 @@
 import { ExcelComponent } from '@core/excel-component';
 import { createTable } from '@/components/table/table.template';
 import { Resizer } from '@/components/table/resizer';
+import { TableSelection } from '@/components/table/TableSelection';
+import { $ } from '@core/dom'
 
 export class Table extends ExcelComponent {
-  static className = 'excel__table table'
+  static CLASS_NAME = 'excel__table table'
+  static Selector = {
+    RESIZE: '[data-resize]',
+    DATA_CELL: '[data-cell]',
+    CELL_DATA: '.cell__data',
+  }
+  static ClassList = {
+    SELECTED: 'selected',
+  }
 
-  constructor($root) {
+  constructor($root, settings) {
     super($root, {
       name: 'Table',
-      eventTypes: ['mousedown'],
+      eventTypes: ['mousedown', 'click', 'keydown', 'input'],
+      ...settings,
     })
 
     this.$box = $root.$el.firstElementChild
     this.resizer = new Resizer(this)
-    this.$cells = [...this.$box.querySelectorAll(
-        '.cell:is([data-col], [data-row])'
+    this.$dataCells = [...this.$box.querySelectorAll(
+        Table.Selector.DATA_CELL
     )],
-    this.$cols = this.$cells.reduce((result, $cell) => {
+    this.$cols = this.$dataCells.reduce((result, $cell) => {
       const colNumber = $cell.dataset.col
 
       if (!colNumber) {
@@ -31,7 +42,7 @@ export class Table extends ExcelComponent {
 
       return result
     }, {})
-    this.$rows = this.$cells.reduce((result, $cell) => {
+    this.$rows = this.$dataCells.reduce((result, $cell) => {
       const rowNumber = $cell.dataset.row
 
       if (!rowNumber) {
@@ -46,6 +57,25 @@ export class Table extends ExcelComponent {
 
       return result
     }, {})
+    this.selection = null
+    this.listeners = {
+      'Formula:input': this.write,
+      'Formula:enter': () => this.selection.current.focus(),
+    }
+  }
+
+  prepare() {
+    this.selection = new TableSelection(
+        this.$dataCells,
+        this.$cols,
+        this.$rows,
+        this.observer
+    )
+  }
+
+  init() {
+    super.init()
+    this.selection.init()
   }
 
   toHTML() {
@@ -53,7 +83,7 @@ export class Table extends ExcelComponent {
   }
 
   onMousedown(event) {
-    if (event.target.dataset.resizer) {
+    if (Resizer.isResizer(event.target)) {
       this.resizer.start(event)
     }
   }
@@ -68,5 +98,30 @@ export class Table extends ExcelComponent {
 
   onMouseleave(event) {
     this.resizer.stop(event)
+  }
+
+  onClick(event) {
+    const $dataCell = event.target.closest(Table.Selector.DATA_CELL)
+
+    if ($dataCell) {
+      this.selection.startMouseSelection($dataCell, event.shiftKey)
+    }
+  }
+
+  onKeydown(event) {
+    if (TableSelection.KEYS.includes(event.key)) {
+      event.preventDefault()
+      this.selection.startKeyboardSelection(event.key)
+    }
+  }
+
+  onInput(event) {
+    const text = event.target.textContent
+    this.observer.notify('Table:input', text)
+  }
+
+  write(text) {
+    const $cellData = $(this.selection.current).find(Table.Selector.CELL_DATA)
+    $cellData.text(text)
   }
 }
