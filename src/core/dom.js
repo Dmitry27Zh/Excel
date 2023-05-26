@@ -40,10 +40,17 @@ class Dom {
     return $(this.$el.querySelector(selector))
   }
 
-  write(text) {
-    this.$el.textContent = text
+  text(text) {
+    const property = this.$el.tagName === 'INPUT' ? 'value' : 'textContent'
 
-    return this
+    if (typeof text === 'string') {
+      this.$el[property] = text
+
+      return this
+    }
+
+
+    return this.$el[property]
   }
 }
 

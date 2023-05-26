@@ -18,7 +18,7 @@ export class Table extends ExcelComponent {
   constructor($root, settings) {
     super($root, {
       name: 'Table',
-      eventTypes: ['mousedown', 'click', 'keydown'],
+      eventTypes: ['mousedown', 'click', 'keydown', 'input'],
       ...settings,
     })
 
@@ -110,8 +110,13 @@ export class Table extends ExcelComponent {
     }
   }
 
+  onInput(event) {
+    const text = event.target.textContent
+    this.observer.notify('Table:input', text)
+  }
+
   write(text) {
     const $cellData = $(this.selection.current).find(Table.Selector.CELL_DATA)
-    $cellData.write(text)
+    $cellData.text(text)
   }
 }
