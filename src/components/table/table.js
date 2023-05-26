@@ -60,6 +60,7 @@ export class Table extends ExcelComponent {
     this.selection = null
     this.listeners = {
       'Formula:input': this.write,
+      'Formula:enter': () => this.selection.current.focus(),
     }
   }
 
