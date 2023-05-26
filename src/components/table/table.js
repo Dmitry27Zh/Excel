@@ -58,6 +58,9 @@ export class Table extends ExcelComponent {
       return result
     }, {})
     this.selection = null
+    this.listeners = {
+      'Formula:input': this.write,
+    }
   }
 
   prepare() {
@@ -104,12 +107,6 @@ export class Table extends ExcelComponent {
       event.preventDefault()
       this.selection.startKeyboardSelection(event.key)
     }
-  }
-
-  subscribe() {
-    super.subscribe({
-      'Formula:input': this.write,
-    })
   }
 
   write(text) {

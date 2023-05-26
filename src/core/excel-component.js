@@ -13,6 +13,7 @@ export class ExcelComponent extends DOMListener {
     super($root, eventTypes)
     this.name = name ?? new.target.name
     this.observer = observer
+    this.listeners = {}
     this.unsubscribeList = []
 
     this.$root.html(this.toHTML())
@@ -40,8 +41,8 @@ export class ExcelComponent extends DOMListener {
     return ''
   }
 
-  subscribe(listeners = {}) {
-    Object.entries(listeners).forEach(([event, listener]) => {
+  subscribe() {
+    Object.entries(this.listeners).forEach(([event, listener]) => {
       this.unsubscribeList.push(this.observer.subscribe(event, listener))
     })
   }
