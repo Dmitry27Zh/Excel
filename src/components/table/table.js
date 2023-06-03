@@ -3,6 +3,7 @@ import { createTable } from '@/components/table/table.template';
 import { Resizer } from '@/components/table/resizer';
 import { TableSelection } from '@/components/table/TableSelection';
 import { $ } from '@core/dom'
+import { Action } from '@/redux/action';
 
 export class Table extends ExcelComponent {
   static CLASS_NAME = 'excel__table table'
@@ -105,6 +106,9 @@ export class Table extends ExcelComponent {
 
     if ($dataCell) {
       this.selection.startMouseSelection($dataCell, event.shiftKey)
+      this.storeDispatch({
+        type: Action.CELL_SELECT,
+      })
     }
   }
 
@@ -123,5 +127,9 @@ export class Table extends ExcelComponent {
   write(text) {
     const $cellData = $(this.selection.current).find(Table.Selector.CELL_DATA)
     $cellData.text(text)
+  }
+
+  storeListener() {
+    console.log('StoreListener in Table component!')
   }
 }

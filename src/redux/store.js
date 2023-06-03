@@ -1,6 +1,8 @@
 export class Store {
   constructor(state, rootReducer) {
-    this.state = rootReducer(state, '__INIT__')
+    this.state = rootReducer(state, {
+      type: '__INIT__',
+    })
     this.rootReducer = rootReducer
     this.listeners = []
   }
@@ -12,5 +14,16 @@ export class Store {
 
   subscribe(listener) {
     this.listeners.push(listener)
+
+    return {
+      unsubscribe() {
+        this.listeners = this.listeners
+            .filter((listener) => listener !== listener)
+      },
+    }
+  }
+
+  getState() {
+    return this.state
   }
 }
