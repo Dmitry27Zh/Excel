@@ -1,8 +1,8 @@
-import { Action } from '@/redux/action'
+import { Type } from '@/redux/type'
 
 export const rootReducer = (state, action) => {
   switch (action.type) {
-    case Action.RESIZE:
+    case Type.RESIZE:
       const resize = { ...state.resize}
       Object.keys(action.data).forEach((key) => {
         const currentData = resize[key]
@@ -14,17 +14,17 @@ export const rootReducer = (state, action) => {
         ...state,
         resize,
       }
-    case Action.INIT:
+    case Type.INIT:
       return {
         ...state,
         isInited: true,
       }
-    case Action.APP_LOAD:
+    case Type.APP_LOAD:
       return {
         ...state,
         isAppLoaded: true,
       }
-    case Action.CELL_SELECT:
+    case Type.CELL_SELECT:
       return {
         ...state,
         cellSelected: true,

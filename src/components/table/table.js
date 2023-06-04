@@ -3,7 +3,8 @@ import { createTable } from '@/components/table/table.template';
 import { Resizer } from '@/components/table/resizer';
 import { TableSelection } from '@/components/table/TableSelection';
 import { $ } from '@core/dom'
-import { Action } from '@/redux/action';
+import { Type } from '@/redux/type';
+import { createAction } from '@/redux/actions';
 
 export class Table extends ExcelComponent {
   static CLASS_NAME = 'excel__table table'
@@ -89,10 +90,7 @@ export class Table extends ExcelComponent {
 
   async stopResize(event) {
     const data = await this.resizer.stop(event)
-    this.storeDispatch({
-      type: Action.RESIZE,
-      data,
-    })
+    this.storeDispatch(createAction(Type.RESIZE, data))
     console.log(this.store.getState())
   }
 
@@ -119,9 +117,7 @@ export class Table extends ExcelComponent {
 
     if ($dataCell) {
       this.selection.startMouseSelection($dataCell, event.shiftKey)
-      this.storeDispatch({
-        type: Action.CELL_SELECT,
-      })
+      this.storeDispatch(createAction(Type.SELECT))
     }
   }
 

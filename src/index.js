@@ -6,6 +6,8 @@ import { Table } from '@/components/table/table'
 import '@/scss/index.scss'
 import { Store } from '@/redux/store'
 import { rootReducer } from '@/redux/root-reducer'
+import { createAction } from '@/redux/actions'
+import { Type } from '@/redux/type'
 
 const state = {
   resize: {},
@@ -15,9 +17,7 @@ const state = {
 }
 const store = new Store(state, rootReducer)
 console.log(store.getState())
-store.dispatch({
-  type: '__APP_LOAD__',
-})
+store.dispatch(createAction(Type.APP_LOAD))
 console.log(store.getState())
 
 const excel = new Excel('#app', {

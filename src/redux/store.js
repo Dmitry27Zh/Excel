@@ -1,8 +1,9 @@
+import { createAction } from '@/redux/actions'
+import { Type } from '@/redux/type'
+
 export class Store {
   constructor(state, rootReducer) {
-    this.state = rootReducer(state, {
-      type: '__INIT__',
-    })
+    this.state = rootReducer(state, createAction(Type.INIT))
     this.rootReducer = rootReducer
     this.listeners = []
   }
