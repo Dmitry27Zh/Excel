@@ -86,4 +86,11 @@ const getRange = (a, b) => {
 
 const clamp = (value, min, max) => Math.min(Math.max(value, min), max)
 
-export { capitalize, bindAll, throttle, getRange, clamp }
+const getStyleCSS = (styleMap) => {
+  return Object.entries(styleMap)
+      .map(([name, value]) => value ? `${name}: ${value}` : '')
+      .filter(Boolean)
+      .join(';')
+}
+
+export { capitalize, bindAll, throttle, getRange, clamp, getStyleCSS }
