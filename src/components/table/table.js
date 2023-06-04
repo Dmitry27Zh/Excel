@@ -83,9 +83,22 @@ export class Table extends ExcelComponent {
     return createTable()
   }
 
+  startResize(event) {
+    this.resizer.start(event)
+  }
+
+  async stopResize(event) {
+    const data = await this.resizer.stop(event)
+    this.storeDispatch({
+      type: Action.RESIZE,
+      data,
+    })
+    console.log(this.store.getState())
+  }
+
   onMousedown(event) {
     if (Resizer.isResizer(event.target)) {
-      this.resizer.start(event)
+      this.startResize(event)
     }
   }
 
@@ -93,12 +106,12 @@ export class Table extends ExcelComponent {
     this.resizer.move(event)
   }
 
-  onMouseup(event) {
-    this.resizer.stop(event)
+  async onMouseup(event) {
+    this.stopResize(event)
   }
 
   onMouseleave(event) {
-    this.resizer.stop(event)
+    this.stopResize(event)
   }
 
   onClick(event) {

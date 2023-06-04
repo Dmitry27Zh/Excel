@@ -64,64 +64,85 @@ export class Resizer {
     }
   }
 
-  resize() {
+  async resize() {
     const $cell = this.$el.closest(Table.Selector.RESIZE)
     const type = this.$el.dataset.resizer
+    let data
 
     switch (type) {
       case 'col':
-        this.resizeCol($cell)
+        data = await this.resizeCol($cell)
         break
       case 'row':
-        this.resizeRow($cell)
+        data = await this.resizeRow($cell)
         break
       default:
         throw new Error(`Unknown type of resizer!`)
     }
+
+    return data
   }
 
-  resizeCol($cell) {
+  async resizeCol($cell) {
     const currentCellWidth = $cell.offsetWidth
     const newCellWidth = currentCellWidth + this.offset.x
     const colNumber = $cell.dataset.col
     const $dataCellsInCol = this.table.$cols[colNumber]
     const $cellsToResize = $dataCellsInCol.concat($cell)
     $cellsToResize.forEach(($cell) => $cell.style.width = `${newCellWidth}px`)
+
+    return {
+      col: {
+        [colNumber]: newCellWidth,
+      },
+    }
   }
 
-  resizeRow($cell) {
+  async resizeRow($cell) {
     const currentRowHeight = $cell.offsetHeight
     const newCellHeight = currentRowHeight + this.offset.y
     const rowNumber = $cell.dataset.row
     const $dataCellsInRow = this.table.$rows[rowNumber]
     const $cellsToResize = $dataCellsInRow.concat($cell)
     $cellsToResize.forEach(($cell) => $cell.style.height = `${newCellHeight}px`)
+
+    return {
+      row: {
+        [rowNumber]: newCellHeight,
+      },
+    }
   }
 
-  stop(event) {
-    event.preventDefault()
-    this.resize(event)
-    this.$el.style.setProperty(
-        '--table-height',
-        null
-    )
-    this.$el.style.setProperty(
-        '--table-width',
-        null
-    )
-    this.$el.style.transform = null
-    this.$el.classList.remove('is-active')
-    this.$el = null
-    this.startCoords = {
-      x: 0,
-      y: 0,
+  async stop(event) {
+    try {
+      event.preventDefault()
+      const data = await this.resize(event)
+      this.$el.style.setProperty(
+          '--table-height',
+          null
+      )
+      this.$el.style.setProperty(
+          '--table-width',
+          null
+      )
+      this.$el.style.transform = null
+      this.$el.classList.remove('is-active')
+      this.$el = null
+      this.startCoords = {
+        x: 0,
+        y: 0,
+      }
+      this.offset = {
+        x: 0,
+        y: 0,
+      }
+      this.table.removeListener('mousemove')
+      this.table.removeListener('mouseup')
+      this.table.removeListener('mouseleave')
+
+      return data
+    } catch (e) {
+      console.error(`Failed resize stop! ${e}`)
     }
-    this.offset = {
-      x: 0,
-      y: 0,
-    }
-    this.table.removeListener('mousemove')
-    this.table.removeListener('mouseup')
-    this.table.removeListener('mouseleave')
   }
 }

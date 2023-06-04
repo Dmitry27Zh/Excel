@@ -8,6 +8,7 @@ import { Store } from '@/redux/store'
 import { rootReducer } from '@/redux/root-reducer'
 
 const state = {
+  resize: {},
   isInited: false,
   isAppLoaded: false,
   cellSelected: false,

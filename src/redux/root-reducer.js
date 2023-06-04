@@ -2,6 +2,18 @@ import { Action } from '@/redux/action'
 
 export const rootReducer = (state, action) => {
   switch (action.type) {
+    case Action.RESIZE:
+      const resize = { ...state.resize}
+      Object.keys(action.data).forEach((key) => {
+        const currentData = resize[key]
+        const nextData = action.data[key]
+        resize[key] = { ...currentData, ...nextData }
+      })
+
+      return {
+        ...state,
+        resize,
+      }
     case Action.INIT:
       return {
         ...state,
