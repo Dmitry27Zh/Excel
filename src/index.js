@@ -8,13 +8,16 @@ import { Store } from '@/redux/store'
 import { rootReducer } from '@/redux/root-reducer'
 import { createAction } from '@/redux/actions'
 import { Type } from '@/redux/type'
+import { storage } from '@core/storage'
 
-const state = {
+const INITIAL_STATE = {
   resize: {},
   isInited: false,
   isAppLoaded: false,
   cellSelected: false,
 }
+
+const state = storage.get('excel-state') ?? INITIAL_STATE
 const store = new Store(state, rootReducer)
 console.log(store.getState())
 store.dispatch(createAction(Type.APP_LOAD))
