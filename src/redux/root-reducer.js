@@ -1,14 +1,11 @@
 import { Type } from '@/redux/type'
+import { updateNestedObj } from '@core/utils'
 
 export const rootReducer = (state, action) => {
   switch (action.type) {
     case Type.RESIZE:
       const resize = { ...state.resize}
-      Object.keys(action.data).forEach((key) => {
-        const currentData = resize[key]
-        const nextData = action.data[key]
-        resize[key] = { ...currentData, ...nextData }
-      })
+      updateNestedObj(resize, action.data)
 
       return {
         ...state,

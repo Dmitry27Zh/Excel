@@ -93,4 +93,20 @@ const getStyleCSS = (styleMap) => {
       .join(';')
 }
 
-export { capitalize, bindAll, throttle, getRange, clamp, getStyleCSS }
+const updateNestedObj = (targetObj, obj) => {
+  Object.keys(obj).forEach((key) => {
+    const currentData = targetObj[key]
+    const nextData = obj[key]
+    targetObj[key] = { ...currentData, ...nextData }
+  })
+}
+
+export {
+  capitalize,
+  bindAll,
+  throttle,
+  getRange,
+  clamp,
+  getStyleCSS,
+  updateNestedObj,
+}
