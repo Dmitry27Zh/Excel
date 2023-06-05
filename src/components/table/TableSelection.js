@@ -25,8 +25,9 @@ export class TableSelection {
     this.maxRow = Math.max(...Object.keys(this.$rows))
   }
 
-  init() {
-    this.selectOnly(this.$dataCells[0])
+  init({ col, row }) {
+    const $dataCell = this.$cols[col][row]
+    this.selectOnly($dataCell)
   }
 
   startMouseSelection($cell, shiftKey) {

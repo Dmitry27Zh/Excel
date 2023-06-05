@@ -11,6 +11,13 @@ export const rootReducer = (state, action) => {
         ...state,
         resize,
       }
+    case Type.CELL_SELECT:
+      return {
+        ...state,
+        cellSelected: action.data,
+      }
+    case Type.CELL_INPUT:
+      return state
     case Type.INIT:
       return {
         ...state,
@@ -20,11 +27,6 @@ export const rootReducer = (state, action) => {
       return {
         ...state,
         isAppLoaded: true,
-      }
-    case Type.CELL_SELECT:
-      return {
-        ...state,
-        cellSelected: true,
       }
     default:
       return state

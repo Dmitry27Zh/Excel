@@ -77,7 +77,7 @@ export class Table extends ExcelComponent {
 
   init() {
     super.init()
-    this.selection.init()
+    this.selection.init(this.store.getState().cellSelected)
   }
 
   toHTML() {
@@ -114,25 +114,49 @@ export class Table extends ExcelComponent {
     this.stopResize(event)
   }
 
-  onClick(event) {
-    const $dataCell = event.target.closest(Table.Selector.DATA_CELL)
+  select(event) {
+    switch (event.type) {
+      case 'click':
+        const $dataCell = event.target.closest(Table.Selector.DATA_CELL)
 
-    if ($dataCell) {
-      this.selection.startMouseSelection($dataCell, event.shiftKey)
-      this.storeDispatch(createAction(Type.SELECT))
+        if ($dataCell) {
+          this.selection.startMouseSelection($dataCell, event.shiftKey)
+        } else {
+          return
+        }
+
+        break
+      case 'keydown':
+        if (TableSelection.KEYS.includes(event.key)) {
+          event.preventDefault()
+          this.selection.startKeyboardSelection(event.key)
+        } else {
+          return
+        }
+
+        break
+      default:
+        return
     }
+
+    this.storeDispatch(createAction(Type.CELL_SELECT, {
+      col: this.selection.current.dataset.col,
+      row: this.selection.current.dataset.row,
+    }))
+  }
+
+  onClick(event) {
+    this.select(event)
   }
 
   onKeydown(event) {
-    if (TableSelection.KEYS.includes(event.key)) {
-      event.preventDefault()
-      this.selection.startKeyboardSelection(event.key)
-    }
+    this.select(event)
   }
 
   onInput(event) {
     const text = event.target.textContent
     this.observer.notify('Table:input', text)
+    this.storeInput(text)
   }
 
   write(text) {
@@ -142,5 +166,9 @@ export class Table extends ExcelComponent {
 
   storeListener() {
     console.log('StoreListener in Table component!')
+  }
+
+  storeInput(text) {
+    this.storeDispatch(createAction(Type.CELL_INPUT, text))
   }
 }
