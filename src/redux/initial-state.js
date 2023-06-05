@@ -2,6 +2,7 @@ import { storage } from '@core/storage'
 
 const INITIAL_STATE = {
   resize: {},
+  content: [['', '', ''], ['', '', ''], ['', '', '']],
   isInited: false,
   isAppLoaded: false,
   cellSelected: false,

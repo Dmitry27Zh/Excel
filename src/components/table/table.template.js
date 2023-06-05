@@ -127,7 +127,7 @@ const createDataRows = (data, resizeData) => {
 }
 
 const createTable = (
-    data = [['', '', ''], ['', '', ''], ['', '', '']],
+    data,
     resizeData
 ) => {
   const colsCount = data[0].length

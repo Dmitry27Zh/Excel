@@ -81,7 +81,9 @@ export class Table extends ExcelComponent {
   }
 
   toHTML() {
-    return createTable(undefined, this.store.getState().resize)
+    const state = this.store.getState()
+
+    return createTable(state.content, state.resize)
   }
 
   startResize(event) {
