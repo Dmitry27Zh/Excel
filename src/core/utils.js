@@ -103,6 +103,10 @@ const updateNestedObj = (targetObj, obj) => {
 
 const copyObj = (obj) => JSON.parse(JSON.stringify(obj))
 
+const isEqual = (a, b) => {
+  return JSON.stringify(a) === JSON.stringify(b)
+}
+
 export {
   capitalize,
   bindAll,
@@ -112,4 +116,5 @@ export {
   getStyleCSS,
   updateNestedObj,
   copyObj,
+  isEqual,
 }
