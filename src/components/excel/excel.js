@@ -1,5 +1,6 @@
 import { $ } from '@core/dom'
 import { Observer } from '@core/observer'
+import { StoreSubscriber } from '@/redux/store-subscriber'
 
 export class Excel {
   constructor(selector, options) {
@@ -7,6 +8,7 @@ export class Excel {
     this.components = options.components ?? []
     this.observer = new Observer()
     this.store = options.store
+    this.storeSubscriber = new StoreSubscriber(options.store)
   }
 
   getRoot() {
@@ -28,10 +30,12 @@ export class Excel {
 
   render() {
     this.$el.append(this.getRoot())
+    this.storeSubscriber.subscribeComponents(this.components)
     this.components.forEach((component) => component.init())
   }
 
   destroy() {
+    this.storeSubscriber.unsubscribeComponents()
     this.components.forEach((component) => component.destroy())
     this.$el.clear()
   }

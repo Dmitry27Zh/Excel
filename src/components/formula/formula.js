@@ -47,4 +47,8 @@ export class Formula extends ExcelComponent {
   write(text) {
     this.$input.text(text)
   }
+
+  storeListener() {
+    console.log('Storelistener in Formula component!')
+  }
 }
