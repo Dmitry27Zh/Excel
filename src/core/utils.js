@@ -101,6 +101,8 @@ const updateNestedObj = (targetObj, obj) => {
   })
 }
 
+const copyObj = (obj) => JSON.parse(JSON.stringify(obj))
+
 export {
   capitalize,
   bindAll,
@@ -109,4 +111,5 @@ export {
   clamp,
   getStyleCSS,
   updateNestedObj,
+  copyObj,
 }

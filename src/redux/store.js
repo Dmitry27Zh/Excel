@@ -1,6 +1,7 @@
 import { createAction } from '@/redux/actions'
 import { Type } from '@/redux/type'
 import { storage } from '@core/storage'
+import { copyObj } from '@core/utils'
 
 export class Store {
   constructor(state, rootReducer) {
@@ -27,6 +28,6 @@ export class Store {
   }
 
   getState() {
-    return this.state
+    return copyObj(this.state)
   }
 }
