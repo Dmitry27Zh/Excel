@@ -20,10 +20,8 @@ export class Store {
     this.listeners.push(listener)
 
     return {
-      unsubscribe() {
-        this.listeners = this.listeners
-            .filter((listener) => listener !== listener)
-      },
+      unsubscribe: () => this.listeners = this.listeners
+          .filter((listener) => listener !== listener),
     }
   }
 
