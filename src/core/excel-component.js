@@ -12,7 +12,7 @@ export class ExcelComponent extends DOMListener {
     this.listeners = {}
     this.unsubscribeList = []
     this.store = store
-    this.storeSubscriber = null
+    this.storeListeners = {}
 
     this.$root.html(this.toHTML())
     bindAll(this, this)
@@ -24,13 +24,11 @@ export class ExcelComponent extends DOMListener {
     this.prepare()
     this.addListeners()
     this.subscribe()
-    this.storeSubscribe()
   }
 
   destroy() {
     this.removeListeners()
     this.unsubscribe()
-    this.storeSubscriber.unsubscribe()
   }
 
   static getListenerName = (eventType) => {
@@ -51,13 +49,7 @@ export class ExcelComponent extends DOMListener {
     this.unsubscribeList.forEach((unssubscribe) => unssubscribe())
   }
 
-  storeSubscribe() {
-    this.storeSubscriber = this.store.subscribe(this.storeListener)
-  }
-
   storeDispatch(action) {
     this.store.dispatch(action)
   }
-
-  storeListener() {}
 }

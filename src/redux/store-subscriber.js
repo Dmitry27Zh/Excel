@@ -6,7 +6,7 @@ export class StoreSubscriber {
 
   subscribeComponents(components) {
     this.subscription = this.store.subscribe(() => {
-      console.log('Central subscribtion!')
+      console.log('Central subscription!')
     })
   }
 

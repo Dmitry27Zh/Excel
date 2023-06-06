@@ -64,6 +64,7 @@ export class Table extends ExcelComponent {
       'Formula:input': this.write,
       'Formula:enter': () => this.selection.current.focus(),
     }
+    this.storeListeners = {}
   }
 
   prepare() {
@@ -163,10 +164,6 @@ export class Table extends ExcelComponent {
     const $cellData = $(this.selection.current).find(Table.Selector.CELL_DATA)
     $cellData.text(text)
     this.storeInput(text)
-  }
-
-  storeListener() {
-    console.log('StoreListener in Table component!')
   }
 
   storeInput(text) {
