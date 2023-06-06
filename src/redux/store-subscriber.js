@@ -15,7 +15,10 @@ export class StoreSubscriber {
         const prevValue = this.prevState[key]
 
         if (!isEqual(value, prevValue)) {
-          console.log(`${key} has been change!`)
+          components.forEach((component) => {
+            const listener = component.storeListeners[key]
+            listener?.(value)
+          })
         }
       })
 

@@ -64,7 +64,9 @@ export class Table extends ExcelComponent {
       'Formula:input': this.write,
       'Formula:enter': () => this.selection.current.focus(),
     }
-    this.storeListeners = {}
+    this.storeListeners = {
+      cellSelected: (value) => console.log(`Cell selected listened in Table Component ${JSON.stringify(value)}`),
+    }
   }
 
   prepare() {
@@ -94,7 +96,6 @@ export class Table extends ExcelComponent {
   async stopResize(event) {
     const data = await this.resizer.stop(event)
     this.storeDispatch(createAction(Type.RESIZE, data))
-    console.log(this.store.getState())
   }
 
   onMousedown(event) {
