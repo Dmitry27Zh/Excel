@@ -162,6 +162,7 @@ export class Table extends ExcelComponent {
   write(text) {
     const $cellData = $(this.selection.current).find(Table.Selector.CELL_DATA)
     $cellData.text(text)
+    this.storeInput(text)
   }
 
   storeListener() {
