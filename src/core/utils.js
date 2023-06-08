@@ -107,6 +107,18 @@ const isEqual = (a, b) => {
   return JSON.stringify(a) === JSON.stringify(b)
 }
 
+const combineArrayItemsToGroups = (array, groupLength) => {
+  const groupsCount = Math.ceil(array.length / groupLength)
+  let groups = new Array(groupsCount)
+      .fill(Array.from({ length: groupLength }))
+  array = array.toReversed()
+  groups = groups.map((group) => {
+    return group.map(() => array.pop()).filter((item) => item != null)
+  })
+
+  return groups
+}
+
 export {
   capitalize,
   bindAll,
@@ -117,4 +129,5 @@ export {
   updateNestedObj,
   copyObj,
   isEqual,
+  combineArrayItemsToGroups,
 }

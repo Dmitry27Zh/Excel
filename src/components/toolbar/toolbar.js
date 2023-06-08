@@ -1,35 +1,36 @@
 import { ExcelComponent } from '@core/excel-component';
+import { createToolbar } from '@/components/toolbar/toolbar.template';
 
 export class Toolbar extends ExcelComponent {
   static CLASS_NAME = 'excel__toolbar toolbar'
+  static BUTTONS = [
+    {
+      type: 'align left',
+      content: '<span class="material-icons">format_align_left</span>',
+    },
+    {
+      type: 'align center',
+      content: '<span class="material-icons">format_align_center</span>',
+    },
+    {
+      type: 'align right',
+      content: '<span class="material-icons">format_align_right</span>',
+    },
+    {
+      type: 'bold',
+      content: '<span class="material-icons">format_bold</span>',
+    },
+    {
+      type: 'italic',
+      content: '<span class="material-icons">format_italic</span>',
+    },
+    {
+      type: 'underline',
+      content: '<span class="material-icons">format_underline</span>',
+    },
+  ]
 
   toHTML() {
-    return `
-      <div class="toolbar__container container">
-        <div class="toolbar__tools">
-          <div class="toolbar__group">
-            <button class="button" type="button">
-              <span class="material-icons"> format_align_left </span>
-              </button>
-            <button class="button" type="button">
-              <span class="material-icons"> format_align_center </span>
-              </button>
-            <button class="button" type="button">
-              <span class="material-icons"> format_align_right </span>
-              </button>
-          </div>
-          <div class="toolbar__group">
-            <button class="button" type="button">
-              <span class="material-icons"> format_bold </span>
-              </button>
-            <button class="button" type="button">
-              <span class="material-icons"> format_italic </span>
-              </button>
-            <button class="button" type="button">
-              <span class="material-icons"> format_underlined </span>
-              </button>
-          </div>
-        </div>
-      </div>`
+    return createToolbar(Toolbar.BUTTONS)
   }
 }
