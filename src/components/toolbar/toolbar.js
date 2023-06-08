@@ -1,8 +1,8 @@
-import { ExcelComponent } from '@core/excel-component';
 import { createToolbar } from '@/components/toolbar/toolbar.template';
 import { BUTTON_ATTR } from '@/components/toolbar/toolbar.template';
+import { ExcelStateComponent } from '@/core/excel-state-component';
 
-export class Toolbar extends ExcelComponent {
+export class Toolbar extends ExcelStateComponent {
   static CLASS_NAME = 'excel__toolbar toolbar'
   static Selector = {
     BUTTON: `[${BUTTON_ATTR}]`,
@@ -37,6 +37,10 @@ export class Toolbar extends ExcelComponent {
   constructor(...args) {
     super(...args)
     this.eventTypes = ['click']
+  }
+
+  prepare() {
+    this.initState({})
   }
 
   toHTML() {
