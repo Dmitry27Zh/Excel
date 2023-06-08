@@ -3,9 +3,11 @@ import { combineArrayItemsToGroups } from '../../core/utils'
 const GROUP_LENGTH = 3
 const BUTTON_ATTR = 'data-type="button"'
 
-const createButton = ({ type, content }) => {
+const createButton = ({ content, value }) => {
+  const valueAttr = `data-value= ${JSON.stringify(value)}`
+
   return `
-    <button class="button" type="button" ${BUTTON_ATTR}>
+    <button class="button" type="button" ${BUTTON_ATTR} ${valueAttr}>
       ${content}
     </button>`
 }

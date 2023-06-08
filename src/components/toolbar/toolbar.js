@@ -9,28 +9,28 @@ export class Toolbar extends ExcelComponent {
   }
   static BUTTONS = [
     {
-      type: 'align left',
       content: '<span class="material-icons">format_align_left</span>',
+      value: { textAlign: 'left' },
     },
     {
-      type: 'align center',
       content: '<span class="material-icons">format_align_center</span>',
+      value: { textAlign: 'center' },
     },
     {
-      type: 'align right',
       content: '<span class="material-icons">format_align_right</span>',
+      value: { textAlign: 'right' },
     },
     {
-      type: 'bold',
       content: '<span class="material-icons">format_bold</span>',
+      value: { fontWeight: 'bold' },
     },
     {
-      type: 'italic',
       content: '<span class="material-icons">format_italic</span>',
+      value: { fontWeight: 'italic' },
     },
     {
-      type: 'underline',
       content: '<span class="material-icons">format_underline</span>',
+      value: { fontWeight: 'underline' },
     },
   ]
 
