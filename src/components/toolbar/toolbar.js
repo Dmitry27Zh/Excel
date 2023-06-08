@@ -1,8 +1,12 @@
 import { ExcelComponent } from '@core/excel-component';
 import { createToolbar } from '@/components/toolbar/toolbar.template';
+import { BUTTON_ATTR } from '@/components/toolbar/toolbar.template';
 
 export class Toolbar extends ExcelComponent {
   static CLASS_NAME = 'excel__toolbar toolbar'
+  static Selector = {
+    BUTTON: `[${BUTTON_ATTR}]`,
+  }
   static BUTTONS = [
     {
       type: 'align left',
@@ -30,7 +34,24 @@ export class Toolbar extends ExcelComponent {
     },
   ]
 
+  constructor(...args) {
+    super(...args)
+    this.eventTypes = ['click']
+  }
+
   toHTML() {
     return createToolbar(Toolbar.BUTTONS)
+  }
+
+  onClick(event) {
+    if (event.target.matches(Toolbar.Selector.BUTTON)) {
+      const button = event.target.closest(Toolbar.Selector.BUTTON)
+      this.changeTool(button)
+    }
+  }
+
+  changeTool(button) {
+    const value = button.dataset.value
+    console.log(value)
   }
 }

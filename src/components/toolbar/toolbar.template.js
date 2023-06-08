@@ -1,10 +1,11 @@
 import { combineArrayItemsToGroups } from '../../core/utils'
 
 const GROUP_LENGTH = 3
+const BUTTON_ATTR = 'data-type="button"'
 
 const createButton = ({ type, content }) => {
   return `
-    <button class="button" type="button">
+    <button class="button" type="button" ${BUTTON_ATTR}>
       ${content}
     </button>`
 }
@@ -24,7 +25,7 @@ const createGroups = (buttons) => {
   return groups.map((group) => createGroup(group)).join('')
 }
 
-export const createToolbar = (buttons) => {
+const createToolbar = (buttons) => {
   const groups = createGroups(buttons)
 
   return `
@@ -34,3 +35,5 @@ export const createToolbar = (buttons) => {
         </div>
       </div>`
 }
+
+export { createToolbar, BUTTON_ATTR}

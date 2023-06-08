@@ -14,4 +14,8 @@
     color: #ffffff;
     background: $jungle-green;
   }
+
+  * {
+    pointer-events: none;
+  }
 }
