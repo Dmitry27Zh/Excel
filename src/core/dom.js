@@ -3,6 +3,10 @@ class Dom {
     this.$el = typeof selector === 'string' ?
       document.querySelector(selector) :
       selector
+
+    if (!this.$el) {
+      throw new Error(`Dom instance doesn't have $el!`)
+    }
   }
 
   html(html) {
