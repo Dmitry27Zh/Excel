@@ -14,11 +14,12 @@ export class ExcelComponent extends DOMListener {
     this.store = store
     this.storeListeners = {}
 
-    this.$root.html(this.toHTML())
     bindAll(this, this)
   }
 
-  prepare() {}
+  prepare() {
+    this.$root.html(this.toHTML())
+  }
 
   init() {
     this.prepare()

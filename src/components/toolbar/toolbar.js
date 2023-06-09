@@ -40,11 +40,16 @@ export class Toolbar extends ExcelStateComponent {
   }
 
   prepare() {
-    this.initState({})
+    const initialState = {
+      fontWeight: 'normal',
+      textAlign: 'left',
+    }
+    this.initState(initialState)
+    super.prepare()
   }
 
   toHTML() {
-    return createToolbar(Toolbar.BUTTONS)
+    return createToolbar(Toolbar.BUTTONS, this.state)
   }
 
   onClick(event) {
@@ -56,6 +61,6 @@ export class Toolbar extends ExcelStateComponent {
 
   changeTool(button) {
     const value = button.dataset.value
-    console.log(value)
+    this.setState(value)
   }
 }

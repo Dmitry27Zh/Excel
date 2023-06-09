@@ -7,5 +7,6 @@ export class ExcelStateComponent extends ExcelComponent {
 
   setState(state) {
     this.state = { ...this.state, ...state}
+    console.log(state)
   }
 }

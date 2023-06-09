@@ -24,8 +24,24 @@ export class Table extends ExcelComponent {
       ...settings,
     })
 
-    this.$box = $root.$el.firstElementChild
     this.resizer = new Resizer(this)
+    this.$box = null
+    this.$dataCells = [],
+    this.$cols = {}
+    this.$rows = {}
+    this.selection = null
+    this.listeners = {
+      'Formula:input': this.write,
+      'Formula:enter': () => this.selection.current.focus(),
+    }
+    this.storeListeners = {
+      cellSelected: (value) => console.log(`Cell selected listened in Table Component ${JSON.stringify(value)}`),
+    }
+  }
+
+  init() {
+    super.init()
+    this.$box = this.$root.$el.firstElementChild
     this.$dataCells = [...this.$box.querySelectorAll(
         Table.Selector.DATA_CELL
     )],
@@ -59,27 +75,12 @@ export class Table extends ExcelComponent {
 
       return result
     }, {})
-    this.selection = null
-    this.listeners = {
-      'Formula:input': this.write,
-      'Formula:enter': () => this.selection.current.focus(),
-    }
-    this.storeListeners = {
-      cellSelected: (value) => console.log(`Cell selected listened in Table Component ${JSON.stringify(value)}`),
-    }
-  }
-
-  prepare() {
     this.selection = new TableSelection(
         this.$dataCells,
         this.$cols,
         this.$rows,
         this.observer
     )
-  }
-
-  init() {
-    super.init()
     this.selection.init(this.store.getState().cellSelected)
   }
 

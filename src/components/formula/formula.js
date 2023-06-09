@@ -13,12 +13,17 @@ export class Formula extends ExcelComponent {
       ...settings,
     })
 
-    this.$input = this.$root.find(Formula.Selector.INPUT)
+    this.$input = null
     this.listeners = {
       'Table:input': this.write,
       'Table:selection': this.write,
     }
     this.storeListeners = {}
+  }
+
+  prepare() {
+    super.prepare()
+    this.$input = this.$root.find(Formula.Selector.INPUT)
   }
 
   toHTML() {

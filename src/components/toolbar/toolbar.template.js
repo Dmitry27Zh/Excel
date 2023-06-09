@@ -1,34 +1,44 @@
-import { combineArrayItemsToGroups } from '../../core/utils'
+import { combineArrayItemsToGroups } from '@core/utils'
 
 const GROUP_LENGTH = 3
 const BUTTON_ATTR = 'data-type="button"'
 
-const createButton = ({ content, value }) => {
-  const valueAttr = `data-value= ${JSON.stringify(value)}`
+const isActive = (value, state) => {
+  const valueKey = Object.keys(value)[0]
+  const valueValue = value[valueKey]
+  const stateValue = state[valueKey]
+  return valueValue === stateValue
+}
+
+const createButton = ({ content, value }, state) => {
+  const valueAttr = `data-value=${JSON.stringify(value)}`
+  const actionClass = isActive(value, state) ? 'active' : ''
 
   return `
-    <button class="button" type="button" ${BUTTON_ATTR} ${valueAttr}>
+    <button class="button ${actionClass}" type="button" ${BUTTON_ATTR} ${valueAttr}>
       ${content}
     </button>`
 }
 
-const createButtons = (buttons) => buttons.map(createButton).join('')
+const createButtons = (buttons, state) => {
+  return buttons.map((button) => createButton(button, state)).join('')
+}
 
-const createGroup = (buttons) => {
+const createGroup = (buttons, state) => {
   return `
     <div class="toolbar__group">
-      ${createButtons(buttons)}
+      ${createButtons(buttons, state)}
     </div>`
 }
 
-const createGroups = (buttons) => {
+const createGroups = (buttons, state) => {
   const groups = combineArrayItemsToGroups(buttons, GROUP_LENGTH)
 
-  return groups.map((group) => createGroup(group)).join('')
+  return groups.map((group) => createGroup(group, state)).join('')
 }
 
-const createToolbar = (buttons) => {
-  const groups = createGroups(buttons)
+const createToolbar = (buttons, state) => {
+  const groups = createGroups(buttons, state)
 
   return `
       <div class="toolbar__container container">
