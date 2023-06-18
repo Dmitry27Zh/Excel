@@ -61,6 +61,6 @@ export class Toolbar extends ExcelStateComponent {
 
   changeTool(button) {
     const value = button.dataset.value
-    this.setState(value)
+    this.setState(JSON.parse(value))
   }
 }

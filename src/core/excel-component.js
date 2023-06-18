@@ -18,7 +18,7 @@ export class ExcelComponent extends DOMListener {
   }
 
   prepare() {
-    this.$root.html(this.toHTML())
+    this.render()
   }
 
   init() {
@@ -38,6 +38,10 @@ export class ExcelComponent extends DOMListener {
 
   toHTML() {
     return ''
+  }
+
+  render() {
+    this.$root.html(this.toHTML())
   }
 
   subscribe() {
