@@ -33,6 +33,7 @@ export class Table extends ExcelComponent {
     this.listeners = {
       'Formula:input': this.write,
       'Formula:enter': () => this.selection.current.focus(),
+      'Toolbar:change tool': this.changeCurrentCellStyles,
     }
     this.storeListeners = {
       cellSelected: (value) => console.log(`Cell selected listened in Table Component ${JSON.stringify(value)}`),
@@ -170,5 +171,13 @@ export class Table extends ExcelComponent {
 
   storeInput(text) {
     this.storeDispatch(createAction(Type.CELL_INPUT, text))
+  }
+
+  changeCurrentCellStyles(styles) {
+    this.selection.selectedGroup.forEach((selectedCell) => {
+      Object.entries(styles).forEach(([key, value]) => {
+        selectedCell.firstElementChild.style[key] = value
+      })
+    })
   }
 }

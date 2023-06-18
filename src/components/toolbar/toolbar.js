@@ -62,7 +62,8 @@ export class Toolbar extends ExcelStateComponent {
   }
 
   changeTool(button) {
-    const value = button.dataset.value
-    this.setState(JSON.parse(value))
+    const value = JSON.parse(button.dataset.value)
+    this.setState(value)
+    this.observer.notify('Toolbar:change tool', value)
   }
 }
