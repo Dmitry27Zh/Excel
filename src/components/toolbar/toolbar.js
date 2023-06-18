@@ -26,11 +26,11 @@ export class Toolbar extends ExcelStateComponent {
     },
     {
       content: '<span class="material-icons">format_italic</span>',
-      value: { fontWeight: 'italic' },
+      value: { fontStyle: 'italic' },
     },
     {
       content: '<span class="material-icons">format_underline</span>',
-      value: { fontWeight: 'underline' },
+      value: { textDecoration: 'underline' },
     },
   ]
 
@@ -42,7 +42,9 @@ export class Toolbar extends ExcelStateComponent {
   prepare() {
     const initialState = {
       fontWeight: 'normal',
+      fontStyle: 'italic',
       textAlign: 'left',
+      textDecoration: 'underline',
     }
     this.initState(initialState)
     super.prepare()
