@@ -11,15 +11,15 @@ export class Toolbar extends ExcelStateComponent {
   static BUTTONS = [
     {
       content: '<span class="material-icons">format_align_left</span>',
-      value: { textAlign: 'left' },
+      value: { justifyContent: 'flex-start' },
     },
     {
       content: '<span class="material-icons">format_align_center</span>',
-      value: { textAlign: 'center' },
+      value: { justifyContent: 'center' },
     },
     {
       content: '<span class="material-icons">format_align_right</span>',
-      value: { textAlign: 'right' },
+      value: { justifyContent: 'flex-end' },
     },
     {
       content: '<span class="material-icons">format_bold</span>',
@@ -48,7 +48,7 @@ export class Toolbar extends ExcelStateComponent {
   prepare() {
     const initialState = {
       ...Toolbar.DEFAULT_STATE,
-      textAlign: 'left',
+      justifyContent: 'flex-start',
       fontStyle: 'italic',
       textDecoration: 'underline',
     }
