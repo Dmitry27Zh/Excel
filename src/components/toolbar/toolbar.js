@@ -6,6 +6,7 @@ export class Toolbar extends ExcelStateComponent {
   static CLASS_NAME = 'excel__toolbar toolbar'
   static Selector = {
     BUTTON: `[${BUTTON_ATTR}]`,
+    BUTTON_ACTIVE: 'active',
   }
   static BUTTONS = [
     {
@@ -33,6 +34,11 @@ export class Toolbar extends ExcelStateComponent {
       value: { textDecoration: 'underline' },
     },
   ]
+  static DEFAULT_STATE = {
+    fontWeight: 'normal',
+    fontStyle: 'normal',
+    textDecoration: 'none',
+  }
 
   constructor(...args) {
     super(...args)
@@ -41,9 +47,9 @@ export class Toolbar extends ExcelStateComponent {
 
   prepare() {
     const initialState = {
-      fontWeight: 'normal',
-      fontStyle: 'italic',
+      ...Toolbar.DEFAULT_STATE,
       textAlign: 'left',
+      fontStyle: 'italic',
       textDecoration: 'underline',
     }
     this.initState(initialState)
@@ -62,8 +68,25 @@ export class Toolbar extends ExcelStateComponent {
   }
 
   changeTool(button) {
-    const value = JSON.parse(button.dataset.value)
-    this.setState(value)
-    this.observer.notify('Toolbar:change tool', value)
+    let stateDiff = JSON.parse(button.dataset.value)
+    const isActive = button.classList.contains(Toolbar.Selector.BUTTON_ACTIVE)
+    stateDiff = this.transformStateDiff(stateDiff, isActive)
+    this.setState(stateDiff)
+    this.observer.notify('Toolbar:change tool', stateDiff)
+  }
+
+  transformStateDiff(stateDiff, isActive) {
+    if (!isActive) {
+      return stateDiff
+    }
+
+    const key = Object.keys(stateDiff)[0]
+    const defaultValue = Toolbar.DEFAULT_STATE[key]
+
+    if (defaultValue != null) {
+      stateDiff[key] = defaultValue
+    }
+
+    return stateDiff
   }
 }

@@ -10,7 +10,10 @@
   cursor: pointer;
 
   &:hover,
-  &:focus-visible,
+  &:focus-visible {
+    opacity: 0.4;
+  }
+
   &.active {
     color: #ffffff;
     background: $jungle-green;
