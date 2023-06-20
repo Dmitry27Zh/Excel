@@ -3,6 +3,32 @@ import { Toolbar } from '@/components/toolbar/toolbar'
 
 const GROUP_LENGTH = 3
 const BUTTON_ATTR = 'data-type="button"'
+const BUTTONS = [
+  {
+    content: '<span class="material-icons">format_align_left</span>',
+    value: { justifyContent: 'flex-start' },
+  },
+  {
+    content: '<span class="material-icons">format_align_center</span>',
+    value: { justifyContent: 'center' },
+  },
+  {
+    content: '<span class="material-icons">format_align_right</span>',
+    value: { justifyContent: 'flex-end' },
+  },
+  {
+    content: '<span class="material-icons">format_bold</span>',
+    value: { fontWeight: 'bold' },
+  },
+  {
+    content: '<span class="material-icons">format_italic</span>',
+    value: { fontStyle: 'italic' },
+  },
+  {
+    content: '<span class="material-icons">format_underline</span>',
+    value: { textDecoration: 'underline' },
+  },
+]
 
 const isActive = (value, state) => {
   const valueKey = Object.keys(value)[0]
@@ -39,8 +65,8 @@ const createGroups = (buttons, state) => {
   return groups.map((group) => createGroup(group, state)).join('')
 }
 
-const createToolbar = (buttons, state) => {
-  const groups = createGroups(buttons, state)
+const createToolbar = (state) => {
+  const groups = createGroups(BUTTONS, state)
 
   return `
       <div class="toolbar__container container">

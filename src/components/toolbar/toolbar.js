@@ -8,32 +8,6 @@ export class Toolbar extends ExcelStateComponent {
     BUTTON: `[${BUTTON_ATTR}]`,
     BUTTON_ACTIVE: 'active',
   }
-  static BUTTONS = [
-    {
-      content: '<span class="material-icons">format_align_left</span>',
-      value: { justifyContent: 'flex-start' },
-    },
-    {
-      content: '<span class="material-icons">format_align_center</span>',
-      value: { justifyContent: 'center' },
-    },
-    {
-      content: '<span class="material-icons">format_align_right</span>',
-      value: { justifyContent: 'flex-end' },
-    },
-    {
-      content: '<span class="material-icons">format_bold</span>',
-      value: { fontWeight: 'bold' },
-    },
-    {
-      content: '<span class="material-icons">format_italic</span>',
-      value: { fontStyle: 'italic' },
-    },
-    {
-      content: '<span class="material-icons">format_underline</span>',
-      value: { textDecoration: 'underline' },
-    },
-  ]
   static DEFAULT_STATE = {
     fontWeight: 'normal',
     fontStyle: 'normal',
@@ -57,7 +31,7 @@ export class Toolbar extends ExcelStateComponent {
   }
 
   toHTML() {
-    return createToolbar(Toolbar.BUTTONS, this.state)
+    return createToolbar(this.state)
   }
 
   onClick(event) {
