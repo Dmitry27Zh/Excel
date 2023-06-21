@@ -3,7 +3,50 @@ import { storage } from '@core/storage'
 const INITIAL_STATE = {
   resize: {},
   cellSelected: { col: 0, row: 0 },
-  content: [['', '', ''], ['', '', ''], ['', '', '']],
+  cells: [
+    [
+      {
+        content: '',
+        tools: {},
+      },
+      {
+        content: '',
+        tools: {},
+      },
+      {
+        content: '',
+        tools: {},
+      },
+    ],
+    [
+      {
+        content: '',
+        tools: {},
+      },
+      {
+        content: '',
+        tools: {},
+      },
+      {
+        content: '',
+        tools: {},
+      },
+    ],
+    [
+      {
+        content: '',
+        tools: {},
+      },
+      {
+        content: '',
+        tools: {},
+      },
+      {
+        content: '',
+        tools: {},
+      },
+    ],
+  ],
   isInited: false,
   isAppLoaded: false,
 }

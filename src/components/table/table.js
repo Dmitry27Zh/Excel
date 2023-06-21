@@ -24,7 +24,7 @@ export class Table extends ExcelComponent {
       ...settings,
     })
 
-    this.resizer = new Resizer(this)
+    this.resizer = null
     this.$box = null
     this.$dataCells = [],
     this.$cols = {}
@@ -76,6 +76,7 @@ export class Table extends ExcelComponent {
 
       return result
     }, {})
+    this.resizer = new Resizer(this)
     this.selection = new TableSelection(
         this.$dataCells,
         this.$cols,
@@ -88,7 +89,7 @@ export class Table extends ExcelComponent {
   toHTML() {
     const state = this.store.getState()
 
-    return createTable(state.content, state.resize)
+    return createTable(state.cells, state.resize)
   }
 
   startResize(event) {

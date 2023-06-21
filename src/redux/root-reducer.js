@@ -1,13 +1,17 @@
 import { Type } from '@/redux/type'
 import { updateNestedObj } from '@core/utils'
 
-const updateTableContent = (state, text) => {
+const updateCells = (state, content) => {
   const { col, row } = state.cellSelected
-  let rowContent = state.content[row]
-  rowContent = rowContent.with(col, text)
-  const content = state.content.with(row, rowContent)
+  let rowContent = state.cells[row]
+  const cell = rowContent[col]
+  rowContent = rowContent.with(col, {
+    ...cell,
+    content,
+  })
+  const cells = state.cells.with(row, rowContent)
 
-  return content
+  return cells
 }
 
 export const rootReducer = (state, action) => {
@@ -26,11 +30,11 @@ export const rootReducer = (state, action) => {
         cellSelected: action.data,
       }
     case Type.CELL_INPUT:
-      const content = updateTableContent(state, action.data)
+      const cells = updateCells(state, action.data)
 
       return {
         ...state,
-        content,
+        cells,
       }
     case Type.INIT:
       return {
