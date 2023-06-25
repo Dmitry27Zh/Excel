@@ -22,8 +22,7 @@ export class Toolbar extends ExcelStateComponent {
   }
 
   prepare() {
-    const initialState = this.getState()
-    this.initState(initialState)
+    this.initState()
     super.prepare()
   }
 
@@ -60,6 +59,11 @@ export class Toolbar extends ExcelStateComponent {
     }
 
     return stateDiff
+  }
+
+  initState() {
+    const state = this.getState()
+    super.initState(state)
   }
 
   getState() {
