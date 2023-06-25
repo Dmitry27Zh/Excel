@@ -22,12 +22,7 @@ export class Toolbar extends ExcelStateComponent {
   }
 
   prepare() {
-    const initialState = {
-      ...Toolbar.DEFAULT_STATE,
-      justifyContent: 'flex-start',
-      fontStyle: 'italic',
-      textDecoration: 'underline',
-    }
+    const initialState = this.getState()
     this.initState(initialState)
     super.prepare()
   }
@@ -65,5 +60,16 @@ export class Toolbar extends ExcelStateComponent {
     }
 
     return stateDiff
+  }
+
+  getState() {
+    const { cells, cellSelected } = this.store.getState()
+    const { col, row} = cellSelected
+    const state = cells[col][row].tools
+
+    return {
+      ...Toolbar.DEFAULT_STATE,
+      ...state,
+    }
   }
 }
