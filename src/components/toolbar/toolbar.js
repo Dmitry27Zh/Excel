@@ -15,10 +15,16 @@ export class Toolbar extends ExcelStateComponent {
     fontStyle: 'normal',
     textDecoration: 'none',
   }
+  static INITIAL_STATE = {
+    justifyContent: 'flex-start',
+  }
 
   constructor(...args) {
     super(...args)
     this.eventTypes = ['click']
+    this.storeListeners = {
+      cellSelected: this.prepare,
+    }
   }
 
   prepare() {
@@ -73,6 +79,7 @@ export class Toolbar extends ExcelStateComponent {
 
     return {
       ...Toolbar.DEFAULT_STATE,
+      ...Toolbar.INITIAL_STATE,
       ...state,
     }
   }
