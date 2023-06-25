@@ -1,6 +1,8 @@
 import { createToolbar } from '@/components/toolbar/toolbar.template';
 import { BUTTON_ATTR } from '@/components/toolbar/toolbar.template';
 import { ExcelStateComponent } from '@/core/excel-state-component';
+import { createAction } from '@/redux/actions';
+import { Type } from '@/redux/type';
 
 export class Toolbar extends ExcelStateComponent {
   static CLASS_NAME = 'excel__toolbar toolbar'
@@ -47,6 +49,7 @@ export class Toolbar extends ExcelStateComponent {
     stateDiff = this.transformStateDiff(stateDiff, isActive)
     this.setState(stateDiff)
     this.observer.notify('Toolbar:change tool', stateDiff)
+    this.storeDispatch(createAction(Type.CHANGE_TOOL, this.state))
   }
 
   transformStateDiff(stateDiff, isActive) {

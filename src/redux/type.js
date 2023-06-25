@@ -4,4 +4,5 @@ export const Type = {
   CELL_SELECT: 'CELL_SELECT',
   CELL_INPUT: 'CELL_INPUT',
   RESIZE: 'RESIZE',
+  CHANGE_TOOL: 'CHANGE_TOOL',
 }
