@@ -24,6 +24,7 @@ const createCell = (
   const style = {
     width: width == null ? '' : `${width}px`,
     height: height == null ? '' : `${height}px`,
+    ...tools,
   }
   const styleAttr = `style="${getStyleCSS(style)}"`
 

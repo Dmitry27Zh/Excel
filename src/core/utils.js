@@ -86,9 +86,14 @@ const getRange = (a, b) => {
 
 const clamp = (value, min, max) => Math.min(Math.max(value, min), max)
 
+const transformCamelToDash = (str) => {
+  return str.replace(/([a-z]+)([A-Z][a-z]?)/g, (_, g1, g2) => `${g1}-${g2.toLowerCase()}`)
+}
+
+
 const getStyleCSS = (styleMap) => {
   return Object.entries(styleMap)
-      .map(([name, value]) => value ? `${name}: ${value}` : '')
+      .map(([name, value]) => value ? `${transformCamelToDash(name)}: ${value}` : '')
       .filter(Boolean)
       .join(';')
 }
