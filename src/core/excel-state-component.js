@@ -1,8 +1,8 @@
 import { ExcelComponent } from '@core/excel-component';
 
 export class ExcelStateComponent extends ExcelComponent {
-  initState(initialState) {
-    this.state = { ...initialState }
+  initState(state) {
+    this.state = { ...state }
   }
 
   setState(state) {
