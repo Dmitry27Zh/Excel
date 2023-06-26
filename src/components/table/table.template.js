@@ -24,9 +24,12 @@ const createCell = (
   const style = {
     width: width == null ? '' : `${width}px`,
     height: height == null ? '' : `${height}px`,
+  }
+  const dataStyle = {
     ...tools,
   }
   const styleAttr = `style="${getStyleCSS(style)}"`
+  const dataStyleAttr = `style="${getStyleCSS(dataStyle)}"`
 
 
   return `
@@ -36,7 +39,7 @@ const createCell = (
         ${colAttr}
         ${rowAttr}
         ${styleAttr}
-        contenteditable="${contenteditable}"><div class="cell__data">${content}</div></div>`
+        contenteditable="${contenteditable}"><div class="cell__data" ${dataStyleAttr}>${content}</div></div>`
 }
 
 const createResizer = (type) => `<div class="table__resizer" data-resizer="${type}"></div>`

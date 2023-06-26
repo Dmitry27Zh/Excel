@@ -1,8 +1,11 @@
 import { storage } from '@core/storage'
 
+const CELL_SELECTED = { col: 0, row: 0 }
+
 const INITIAL_STATE = {
   resize: {},
-  cellSelected: { col: 0, row: 0 },
+  cellSelected: CELL_SELECTED,
+  groupSelected: [CELL_SELECTED],
   cells: [
     [
       {
