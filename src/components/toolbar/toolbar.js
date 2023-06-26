@@ -74,8 +74,8 @@ export class Toolbar extends ExcelStateComponent {
 
   getState() {
     const { cells, cellSelected } = this.store.getState()
-    const { col, row} = cellSelected
-    const state = cells[col][row].tools
+    const { col, row } = cellSelected
+    const state = cells[row][col].tools
 
     return {
       ...Toolbar.DEFAULT_STATE,
