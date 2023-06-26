@@ -1,20 +1,34 @@
 import { Type } from '@/redux/type'
 import { updateNestedObj } from '@core/utils'
 
-const updateCells = (state, content, tools) => {
-  const { col, row } = state.cellSelected
-  let rowContent = state.cells[row]
-  const cell = rowContent[col]
-  content = content ?? cell.content
-  tools = tools ?? cell.tools
-  rowContent = rowContent.with(col, {
-    ...cell,
-    content,
-    tools,
+const updateCell = (cells, { col, row, ...newData}) => {
+  let cellsInRow = cells[row]
+  const oldData = cellsInRow[col]
+  cellsInRow = cellsInRow.with(col, {
+    ...oldData,
+    ...newData,
   })
-  const cells = state.cells.with(row, rowContent)
+  cells = cells.with(row, cellsInRow)
 
   return cells
+}
+
+const updateCells = (cells, dataList) => {
+  dataList.forEach((data) => {
+    cells = updateCell(cells, data)
+  })
+
+  return cells
+}
+
+const updateTools = (cells, groupSelected, tools) => {
+  const dataList = groupSelected.map(({ col, row }) => {
+    return {
+      col, row, tools,
+    }
+  })
+
+  return updateCells(cells, dataList)
 }
 
 export const rootReducer = (state, action) => {
@@ -30,10 +44,11 @@ export const rootReducer = (state, action) => {
     case Type.CELL_SELECT:
       return {
         ...state,
-        cellSelected: action.data,
+        ...action.data,
       }
     case Type.CELL_INPUT: {
-      const cells = updateCells(state, action.data)
+      let { cells, cellSelected: { col, row} } = state
+      cells = updateCells(cells, [{ col, row, content: action.data }])
 
       return {
         ...state,
@@ -41,7 +56,8 @@ export const rootReducer = (state, action) => {
       }
     }
     case Type.CHANGE_TOOL: {
-      const cells = updateCells(state, null, action.data)
+      let { cells, groupSelected } = state
+      cells = updateTools(cells, groupSelected, action.data)
 
       return {
         ...state,
