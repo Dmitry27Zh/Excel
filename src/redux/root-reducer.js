@@ -1,37 +1,25 @@
 import { Type } from '@/redux/type'
 import { updateNestedObj } from '@core/utils'
+import { copyObj } from '@core/utils'
 
-const updateCell = (cells, { col, row, ...newData}) => {
-  let cellsInRow = cells[row]
-  const oldData = cellsInRow[col]
-  cellsInRow = cellsInRow.with(col, {
-    ...oldData,
-    ...newData,
-  })
-  cells = cells.with(row, cellsInRow)
-
-  return cells
+const updateContent = (content, row, col, currentContent) => {
+  content[row][col] = currentContent
 }
 
-const updateCells = (cells, dataList) => {
-  dataList.forEach((data) => {
-    cells = updateCell(cells, data)
-  })
-
-  return cells
-}
-
-const updateTools = (cells, groupSelected, tools) => {
-  const dataList = groupSelected.map(({ col, row }) => {
-    return {
-      col, row, tools,
+const updateTools = (tools, groupSelected, diff) => {
+  groupSelected.forEach((cellSelected) => {
+    const { row, col } = cellSelected
+    const currentTools = tools[row][col]
+    tools[row][col] = {
+      ...currentTools,
+      ...diff,
     }
   })
-
-  return updateCells(cells, dataList)
 }
 
 export const rootReducer = (state, action) => {
+  state = copyObj(state)
+
   switch (action.type) {
     case Type.RESIZE:
       const resize = { ...state.resize}
@@ -47,21 +35,21 @@ export const rootReducer = (state, action) => {
         ...action.data,
       }
     case Type.CELL_INPUT: {
-      let { cells, cellSelected: { col, row} } = state
-      cells = updateCells(cells, [{ col, row, content: action.data }])
+      const { content, cellSelected: { col, row} } = state
+      updateContent(content, row, col, action.data)
 
       return {
         ...state,
-        cells,
+        content,
       }
     }
     case Type.CHANGE_TOOL: {
-      let { cells, groupSelected } = state
-      cells = updateTools(cells, groupSelected, action.data)
+      const { tools, groupSelected } = state
+      updateTools(tools, groupSelected, action.data)
 
       return {
         ...state,
-        cells,
+        tools,
       }
     }
     case Type.INIT:

@@ -11,9 +11,7 @@ import { Type } from '@/redux/type'
 import { initialState } from '@/redux/initial-state'
 
 const store = new Store(initialState, rootReducer)
-console.log(store.getState())
 store.dispatch(createAction(Type.APP_LOAD))
-console.log(store.getState())
 
 const excel = new Excel('#app', {
   components: [Header, Toolbar, Formula, Table],

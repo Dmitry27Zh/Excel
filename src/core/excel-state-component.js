@@ -5,8 +5,8 @@ export class ExcelStateComponent extends ExcelComponent {
     this.state = { ...state }
   }
 
-  setState(state) {
-    this.state = { ...this.state, ...state}
+  setState(stateDiff) {
+    this.state = { ...this.state, ...stateDiff}
     this.render()
   }
 }

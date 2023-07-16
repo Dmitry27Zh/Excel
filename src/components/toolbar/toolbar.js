@@ -3,6 +3,7 @@ import { BUTTON_ATTR } from '@/components/toolbar/toolbar.template';
 import { ExcelStateComponent } from '@/core/excel-state-component';
 import { createAction } from '@/redux/actions';
 import { Type } from '@/redux/type';
+import { INITIAL_TOOLS } from '@/redux/initial-state';
 
 export class Toolbar extends ExcelStateComponent {
   static CLASS_NAME = 'excel__toolbar toolbar'
@@ -10,14 +11,7 @@ export class Toolbar extends ExcelStateComponent {
     BUTTON: `[${BUTTON_ATTR}]`,
     BUTTON_ACTIVE: 'active',
   }
-  static DEFAULT_STATE = {
-    fontWeight: 'normal',
-    fontStyle: 'normal',
-    textDecoration: 'none',
-  }
-  static INITIAL_STATE = {
-    justifyContent: 'flex-start',
-  }
+  static UNCANCELABLE_TOOLS = ['justifyContent']
 
   constructor(...args) {
     super(...args)
@@ -47,9 +41,11 @@ export class Toolbar extends ExcelStateComponent {
     let stateDiff = JSON.parse(button.dataset.value)
     const isActive = button.classList.contains(Toolbar.Selector.BUTTON_ACTIVE)
     stateDiff = this.transformStateDiff(stateDiff, isActive)
+    console.log(this.state)
+    console.log(stateDiff)
     this.setState(stateDiff)
     this.observer.notify('Toolbar:change tool', stateDiff)
-    this.storeDispatch(createAction(Type.CHANGE_TOOL, this.state))
+    this.storeDispatch(createAction(Type.CHANGE_TOOL, stateDiff))
   }
 
   transformStateDiff(stateDiff, isActive) {
@@ -57,30 +53,23 @@ export class Toolbar extends ExcelStateComponent {
       return stateDiff
     }
 
-    const key = Object.keys(stateDiff)[0]
-    const defaultValue = Toolbar.DEFAULT_STATE[key]
+    const tool = Object.keys(stateDiff)[0]
 
-    if (defaultValue != null) {
-      stateDiff[key] = defaultValue
+    const cancelTool = () => {
+      const initialValue = INITIAL_TOOLS[tool]
+      stateDiff[tool] = initialValue
+    }
+
+    if (!Toolbar.UNCANCELABLE_TOOLS.includes(tool)) {
+      cancelTool()
     }
 
     return stateDiff
   }
 
   initState() {
-    const state = this.getState()
+    const { cellSelected: { row, col }, tools } = this.store.getState()
+    const state = tools[row][col]
     super.initState(state)
-  }
-
-  getState() {
-    const { cells, cellSelected } = this.store.getState()
-    const { col, row } = cellSelected
-    const state = cells[row][col].tools
-
-    return {
-      ...Toolbar.DEFAULT_STATE,
-      ...Toolbar.INITIAL_STATE,
-      ...state,
-    }
   }
 }

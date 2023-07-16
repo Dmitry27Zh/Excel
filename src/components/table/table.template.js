@@ -8,19 +8,19 @@ const HeadContent = {
 const createCell = (
     content,
     resize,
-    colIndex,
-    rowIndex,
+    col,
+    row,
     tools = null,
     contenteditable = 'true',
     extraClassName = 'table__cell',
     isResize = false,
 ) => {
-  const colAttr = colIndex == null ? '' : `data-col="${colIndex}"`
-  const rowAttr = rowIndex == null ? '' : `data-row="${rowIndex}"`
+  const colAttr = col == null ? '' : `data-col="${col}"`
+  const rowAttr = row == null ? '' : `data-row="${row}"`
   const resizeAttr = isResize ? 'data-resize' : ''
-  const dataCellAttr = colIndex == null || rowIndex == null ? '' : 'data-cell'
-  const width = resize.col?.[colIndex]
-  const height = resize.row?.[rowIndex]
+  const dataCellAttr = col == null || row == null ? '' : 'data-cell'
+  const width = resize.col?.[col]
+  const height = resize.row?.[row]
   const style = {
     width: width == null ? '' : `${width}px`,
     height: height == null ? '' : `${height}px`,
@@ -77,11 +77,11 @@ const createHeads = (
     createHead(content, resize, index)).join('')
 }
 
-const createInfo = (content, rowIndex, resize) => {
+const createInfo = (content, row, resize) => {
   const resizer = content ? createResizer('row') : ''
   content = `${content}${resizer}`
   const extraClassName = 'table__info'
-  const colIndex = null
+  const col = null
   const tools = null
   const contenteditable = 'false'
   const isResize = true
@@ -89,8 +89,8 @@ const createInfo = (content, rowIndex, resize) => {
   return createCell(
       content,
       resize,
-      colIndex,
-      rowIndex,
+      col,
+      row,
       tools,
       contenteditable,
       extraClassName,
@@ -98,8 +98,8 @@ const createInfo = (content, rowIndex, resize) => {
   )
 }
 
-const createRow = (infoContent, cells, rowIndex, resize) => {
-  const info = createInfo(infoContent, rowIndex, resize)
+const createRow = (infoContent, cells, row, resize) => {
+  const info = createInfo(infoContent, row, resize)
 
   return `
     <div class="table__row">
@@ -113,38 +113,40 @@ const createRow = (infoContent, cells, rowIndex, resize) => {
 const createServiceRow = (colsCount, resize) => {
   const infoContent = ''
   const cells = createHeads(colsCount, resize)
-  const rowIndex = null
+  const row = null
 
-  return createRow(infoContent, cells, rowIndex, resize)
+  return createRow(infoContent, cells, row, resize)
 }
 
-const createDataRow = (infoContent, row, rowIndex, resize) => {
-  const cells = row
-      .map((cell, colIndex) => {
-        const { content, tools } = cell
-        return createCell(content, resize, colIndex, rowIndex, tools)
+const createDataRow = (infoContent, rowContent, tools, row, resize) => {
+  const cells = rowContent
+      .map((content, col) => {
+        const currentTools = tools[row][col]
+
+        return createCell(content, resize, col, row, currentTools)
       })
       .join('')
 
-  return createRow(infoContent, cells, rowIndex, resize)
+  return createRow(infoContent, cells, row, resize)
 }
 
-const createDataRows = (cells, resize) => {
-  return cells.map((row, index) => {
-    const infoContent = index + 1
-    const mainRow = createDataRow(infoContent, row, index, resize)
+const createDataRows = (content, tools, resize) => {
+  return content.map((rowContent, row) => {
+    const infoContent = row + 1
+    const dataRow = createDataRow(infoContent, rowContent, tools, row, resize)
 
-    return mainRow
+    return dataRow
   })
 }
 
 const createTable = (
-    cells,
+    content,
+    tools,
     resize
 ) => {
-  const colsCount = cells[0].length
+  const colsCount = content[0].length
   const serviceRow = createServiceRow(colsCount, resize)
-  const dataRows = createDataRows(cells, resize)
+  const dataRows = createDataRows(content, tools, resize)
 
   return `<div class="table__box">${[serviceRow, ...dataRows].join('')}</div>`
 }

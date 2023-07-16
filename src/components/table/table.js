@@ -47,31 +47,31 @@ export class Table extends ExcelComponent {
         Table.Selector.DATA_CELL
     )],
     this.$cols = this.$dataCells.reduce((result, $cell) => {
-      const colNumber = $cell.dataset.col
+      const col = $cell.dataset.col
 
-      if (!colNumber) {
+      if (!col) {
         return result
       }
 
-      if (result[colNumber]) {
-        result[colNumber].push($cell)
+      if (result[col]) {
+        result[col].push($cell)
       } else {
-        result[colNumber] = [$cell]
+        result[col] = [$cell]
       }
 
       return result
     }, {})
     this.$rows = this.$dataCells.reduce((result, $cell) => {
-      const rowNumber = $cell.dataset.row
+      const row = $cell.dataset.row
 
-      if (!rowNumber) {
+      if (!row) {
         return result
       }
 
-      if (result[rowNumber]) {
-        result[rowNumber].push($cell)
+      if (result[row]) {
+        result[row].push($cell)
       } else {
-        result[rowNumber] = [$cell]
+        result[row] = [$cell]
       }
 
       return result
@@ -87,9 +87,9 @@ export class Table extends ExcelComponent {
   }
 
   toHTML() {
-    const state = this.store.getState()
+    const { content, tools, resize } = this.store.getState()
 
-    return createTable(state.cells, state.resize)
+    return createTable(content, tools, resize)
   }
 
   startResize(event) {
