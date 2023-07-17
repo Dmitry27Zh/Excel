@@ -2,4 +2,8 @@ const Ms = {
   DEBOUNCE_REDUX: 300,
 }
 
-export { Ms }
+const Attr = {
+  CONTENT: 'data-content',
+}
+
+export { Ms, Attr }

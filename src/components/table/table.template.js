@@ -1,4 +1,5 @@
 import { getStyleCSS } from '@core/utils'
+import { parse } from '@/core/parse'
 
 const HeadContent = {
   A: 'A'.codePointAt(),
@@ -13,11 +14,11 @@ const createCell = (
     tools = null,
     contenteditable = 'true',
     extraClassName = 'table__cell',
-    isResize = false,
+    resizer = '',
 ) => {
   const colAttr = col == null ? '' : `data-col="${col}"`
   const rowAttr = row == null ? '' : `data-row="${row}"`
-  const resizeAttr = isResize ? 'data-resize' : ''
+  const resizeAttr = resizer ? 'data-resize' : ''
   const dataCellAttr = col == null || row == null ? '' : 'data-cell'
   const width = resize.col?.[col]
   const height = resize.row?.[row]
@@ -30,6 +31,8 @@ const createCell = (
   }
   const styleAttr = `style="${getStyleCSS(style)}"`
   const dataStyleAttr = `style="${getStyleCSS(dataStyle)}"`
+  const contentAttr = `data-content="${content}"`
+  content = `${content}${resizer}`
 
 
   return `
@@ -39,19 +42,20 @@ const createCell = (
         ${colAttr}
         ${rowAttr}
         ${styleAttr}
-        contenteditable="${contenteditable}"><div class="cell__data" ${dataStyleAttr}>${content}</div></div>`
+        ${contentAttr}
+        contenteditable="${contenteditable}"><div class="cell__data"
+          ${dataStyleAttr}
+        >${parse(content)}</div></div>`
 }
 
 const createResizer = (type) => `<div class="table__resizer" data-resizer="${type}"></div>`
 
 const createHead = (content, resize, colIndex) => {
   const resizer = createResizer('col')
-  content = `${content}${resizer}`
   const extraClassName = 'table__cell table__head'
   const rowIndex = null
   const tools = null
   const contenteditable = 'false'
-  const isResize = true
 
   return createCell(
       content,
@@ -61,7 +65,7 @@ const createHead = (content, resize, colIndex) => {
       tools,
       contenteditable,
       extraClassName,
-      isResize
+      resizer
   )
 }
 
@@ -79,12 +83,10 @@ const createHeads = (
 
 const createInfo = (content, row, resize) => {
   const resizer = content ? createResizer('row') : ''
-  content = `${content}${resizer}`
   const extraClassName = 'table__info'
   const col = null
   const tools = null
   const contenteditable = 'false'
-  const isResize = true
 
   return createCell(
       content,
@@ -94,7 +96,7 @@ const createInfo = (content, row, resize) => {
       tools,
       contenteditable,
       extraClassName,
-      isResize
+      resizer
   )
 }
 

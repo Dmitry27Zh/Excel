@@ -5,6 +5,8 @@ import { TableSelection } from '@/components/table/TableSelection';
 import { $ } from '@core/dom'
 import { Type } from '@/redux/type';
 import { createAction } from '@/redux/actions';
+import { parse } from '@core/parse';
+import { Attr } from '@core/constants';
 
 export class Table extends ExcelComponent {
   static CLASS_NAME = 'excel__table table'
@@ -175,14 +177,19 @@ export class Table extends ExcelComponent {
   }
 
   onInput(event) {
-    const text = event.target.textContent
+    const $cell = $(event.target)
+    const text = $cell.text()
+    $cell.attr(Attr.CONTENT, text)
     this.observer.notify('Table:input', text)
     this.storeInput(text)
   }
 
   write(text) {
-    const $cellData = $(this.selection.current).find(Table.Selector.CELL_DATA)
-    $cellData.text(text)
+    const $cell = $(this.selection.current)
+    const $cellData = $cell.find(Table.Selector.CELL_DATA)
+    $cell.attr(Attr.CONTENT, text)
+    const parsedText = parse(text)
+    $cellData.text(parsedText)
     this.storeInput(text)
   }
 

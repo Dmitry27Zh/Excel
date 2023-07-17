@@ -41,8 +41,6 @@ export class Toolbar extends ExcelStateComponent {
     let stateDiff = JSON.parse(button.dataset.value)
     const isActive = button.classList.contains(Toolbar.Selector.BUTTON_ACTIVE)
     stateDiff = this.transformStateDiff(stateDiff, isActive)
-    console.log(this.state)
-    console.log(stateDiff)
     this.setState(stateDiff)
     this.observer.notify('Toolbar:change tool', stateDiff)
     this.storeDispatch(createAction(Type.CHANGE_TOOL, stateDiff))

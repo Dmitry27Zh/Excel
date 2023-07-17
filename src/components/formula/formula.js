@@ -1,4 +1,5 @@
 import { ExcelComponent } from '@core/excel-component';
+import { Attr } from '@core/constants';
 
 export class Formula extends ExcelComponent {
   static CLASS_NAME = 'excel__formula formula'
@@ -16,7 +17,7 @@ export class Formula extends ExcelComponent {
     this.$input = null
     this.listeners = {
       'Table:input': this.write,
-      'Table:selection': this.write,
+      'Table:selection': ($el) => this.write($el.attr(Attr.CONTENT)),
     }
     this.storeListeners = {}
   }

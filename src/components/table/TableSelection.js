@@ -85,7 +85,7 @@ export class TableSelection {
     this.select($cell)
     this.current = $cell
     this.current.focus()
-    this.observer.notify('Table:selection', $(this.current).text())
+    this.observer.notify('Table:selection', $(this.current))
   }
 
   selectExtra($cells) {
