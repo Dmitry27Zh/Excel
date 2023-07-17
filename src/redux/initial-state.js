@@ -7,6 +7,7 @@ const INITIAL_TOOLS = {
   textDecoration: 'none',
   justifyContent: 'flex-start',
 }
+const INITIAL_TITLE = 'Новая'
 
 const INITIAL_STATE = {
   resize: {},
@@ -24,6 +25,7 @@ const INITIAL_STATE = {
   ],
   isInited: false,
   isAppLoaded: false,
+  title: INITIAL_TITLE,
 }
 
 const initialState = storage.get('excel-state') ?? INITIAL_STATE

@@ -52,6 +52,14 @@ export const rootReducer = (state, action) => {
         tools,
       }
     }
+    case Type.TITLE_INPUT: {
+      const title = action.data
+
+      return {
+        ...state,
+        title,
+      }
+    }
     case Type.INIT:
       return {
         ...state,

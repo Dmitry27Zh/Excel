@@ -5,4 +5,5 @@ export const Type = {
   CELL_INPUT: 'CELL_INPUT',
   RESIZE: 'RESIZE',
   CHANGE_TOOL: 'CHANGE_TOOL',
+  TITLE_INPUT: 'TITLE_INPUT',
 }
