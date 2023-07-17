@@ -11,7 +11,15 @@
 
   &:hover,
   &:focus-visible {
+    opacity: 0.4;
+  }
+
+  &.active {
     color: #ffffff;
     background: $jungle-green;
+  }
+
+  * {
+    pointer-events: none;
   }
 }

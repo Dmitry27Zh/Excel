@@ -5,22 +5,21 @@ import { bindAll } from '@core/utils'
 export class ExcelComponent extends DOMListener {
   static TAG_NAME = 'div'
 
-  constructor($root, {
-    eventTypes,
-    name,
-    observer,
-  }) {
+  constructor($root, { eventTypes, name, observer, store }) {
     super($root, eventTypes)
     this.name = name ?? new.target.name
     this.observer = observer
     this.listeners = {}
     this.unsubscribeList = []
+    this.store = store
+    this.storeListeners = {}
 
-    this.$root.html(this.toHTML())
     bindAll(this, this)
   }
 
-  prepare() {}
+  prepare() {
+    this.render()
+  }
 
   init() {
     this.prepare()
@@ -41,6 +40,10 @@ export class ExcelComponent extends DOMListener {
     return ''
   }
 
+  render() {
+    this.$root.html(this.toHTML())
+  }
+
   subscribe() {
     Object.entries(this.listeners).forEach(([event, listener]) => {
       this.unsubscribeList.push(this.observer.subscribe(event, listener))
@@ -49,5 +52,9 @@ export class ExcelComponent extends DOMListener {
 
   unsubscribe() {
     this.unsubscribeList.forEach((unssubscribe) => unssubscribe())
+  }
+
+  storeDispatch(action) {
+    this.store.dispatch(action)
   }
 }

@@ -1,0 +1,9 @@
+export const Type = {
+  INIT: '__INIT__',
+  APP_LOAD: '__APP_LOAD__',
+  CELL_SELECT: 'CELL_SELECT',
+  CELL_INPUT: 'CELL_INPUT',
+  RESIZE: 'RESIZE',
+  CHANGE_TOOL: 'CHANGE_TOOL',
+  TITLE_INPUT: 'TITLE_INPUT',
+}

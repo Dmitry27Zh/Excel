@@ -3,6 +3,10 @@ class Dom {
     this.$el = typeof selector === 'string' ?
       document.querySelector(selector) :
       selector
+
+    if (!this.$el) {
+      throw new Error(`Dom instance doesn't have $el!`)
+    }
   }
 
   html(html) {
@@ -51,6 +55,16 @@ class Dom {
 
 
     return this.$el[property]
+  }
+
+  attr(name, value) {
+    if (value) {
+      this.$el.setAttribute(name, value)
+
+      return this
+    }
+
+    return this.$el.getAttribute(name)
   }
 }
 
