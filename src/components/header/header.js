@@ -2,6 +2,8 @@ import { ExcelComponent } from '@core/excel-component';
 import { $ } from '@core/dom';
 import { Type } from '@/redux/type';
 import { createAction } from '@/redux/actions';
+import { debounce } from '@core/utils';
+import { Ms } from '@core/constants';
 
 export class Header extends ExcelComponent {
   static TAG_NAME = 'header'
@@ -12,6 +14,11 @@ export class Header extends ExcelComponent {
       eventTypes: ['input'],
       ...options,
     })
+  }
+
+  prepare() {
+    super.prepare()
+    this.onInput = debounce(this.onInput, Ms.DEBOUNCE_REDUX)
   }
 
   toHTML() {

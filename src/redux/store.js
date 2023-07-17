@@ -1,6 +1,5 @@
 import { createAction } from '@/redux/actions'
 import { Type } from '@/redux/type'
-import { storage } from '@core/storage'
 import { copyObj } from '@core/utils'
 
 export class Store {
@@ -12,8 +11,7 @@ export class Store {
 
   dispatch(action) {
     this.state = this.rootReducer(this.state, action)
-    this.listeners.forEach((listener) => listener())
-    storage.set('excel-state', this.state)
+    this.listeners.forEach((listener) => listener(this.state))
   }
 
   subscribe(listener) {

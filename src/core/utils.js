@@ -77,6 +77,15 @@ const throttle = (cb, timeout) => {
   }
 }
 
+const debounce = (cb, ms) => {
+  let timeout
+
+  return function(...args) {
+    clearTimeout(timeout)
+    timeout = setTimeout(() => cb.apply(this, args), ms)
+  }
+}
+
 const getRange = (a, b) => {
   const min = Math.min(a, b)
   const max = Math.max(a, b)
@@ -128,6 +137,7 @@ export {
   capitalize,
   bindAll,
   throttle,
+  debounce,
   getRange,
   clamp,
   getStyleCSS,
