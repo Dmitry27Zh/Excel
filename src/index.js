@@ -12,6 +12,7 @@ import { initialState } from '@/redux/initial-state'
 import { storage } from '@core/storage'
 import { debounce } from '@core/utils'
 import { Ms } from '@core/constants'
+import { Router } from './core/routing/router'
 
 const store = new Store(initialState, rootReducer)
 store.dispatch(createAction(Type.APP_LOAD))
@@ -30,3 +31,6 @@ const excel = new Excel('#app', {
 window.excel = excel
 
 excel.render()
+
+const router = new Router('#app')
+console.log(router)
