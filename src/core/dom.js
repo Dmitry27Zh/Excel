@@ -28,6 +28,7 @@ class Dom {
 
   clear() {
     this.html('')
+
     return this
   }
 
@@ -37,6 +38,7 @@ class Dom {
     }
 
     this.$el.append(node)
+
     return this
   }
 
@@ -75,5 +77,6 @@ export const $ = function(selector) {
 $.create = function(tagName = 'div', className = '') {
   const $el = document.createElement(tagName)
   $el.className = className
+
   return $($el)
 }
