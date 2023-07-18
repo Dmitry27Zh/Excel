@@ -70,6 +70,12 @@ export const rootReducer = (state, action) => {
         ...state,
         isAppLoaded: true,
       }
+    case Type.PAGE_LOAD:
+      console.log(`Page loaded: ${action.data}`)
+
+      return {
+        ...state,
+      }
     default:
       return state
   }

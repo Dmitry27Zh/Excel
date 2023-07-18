@@ -7,7 +7,6 @@ export class Excel extends Page {
     super(options)
     this.components = options.components ?? []
     this.observer = new Observer()
-    this.store = options.store
     this.init()
   }
 
