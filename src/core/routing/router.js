@@ -27,6 +27,7 @@ export class Router {
     const page = routes[main]?.[param]?.()
 
     if (page) {
+      this.page?.destroy()
       this.$placeholder.append(page.$root)
       this.page = page
     }

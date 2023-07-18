@@ -1,5 +1,3 @@
-import { storage } from '@core/storage'
-
 const CELL_SELECTED = { col: 0, row: 0 }
 const INITIAL_TOOLS = {
   fontWeight: 'normal',
@@ -28,6 +26,4 @@ const INITIAL_STATE = {
   title: INITIAL_TITLE,
 }
 
-const initialState = storage.get('excel-state') ?? INITIAL_STATE
-
-export { INITIAL_TOOLS, initialState}
+export { INITIAL_TOOLS, INITIAL_STATE}

@@ -22,7 +22,7 @@ export const routes = {
       })
     },
     1: () => {
-      const name = getName('excel', 'new')
+      const name = getName('excel', '1')
 
       return new Excel({
         ...excelOptions,
