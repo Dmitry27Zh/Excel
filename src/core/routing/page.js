@@ -26,11 +26,9 @@ export class Page {
     this.store.subscribe(this.saveState)
   }
 
-  saveState() {
-    debounce((state) => {
-      storage.set('excel-state', state)
-    }, Ms.DEBOUNCE_REDUX)
-  }
+  saveState = debounce((state) => {
+    storage.set('excel-state', state)
+  }, Ms.DEBOUNCE_REDUX)
 
   destroy() {
     console.log('Destroy page!')
