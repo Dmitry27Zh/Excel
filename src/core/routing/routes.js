@@ -26,13 +26,25 @@ const excelOptions = {
   store,
 }
 
+const getName = (main, param) => `${main}-${param}`
+
 export const routes = {
   excel: {
     new: () => {
-      return new Excel(excelOptions)
+      const name = getName('excel', 'new')
+
+      return new Excel({
+        ...excelOptions,
+        name,
+      })
     },
     1: () => {
-      return new Excel(excelOptions)
+      const name = getName('excel', 'new')
+
+      return new Excel({
+        ...excelOptions,
+        name,
+      })
     },
   },
 }

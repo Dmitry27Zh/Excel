@@ -1,9 +1,13 @@
 import { StoreSubscriber } from '@/redux/store-subscriber'
 
 export class Page {
-  constructor(options) {
+  constructor({
+    store,
+    name,
+  }) {
     this.$root = null
-    this.storeSubscriber = new StoreSubscriber(options.store)
+    this.name = name
+    this.storeSubscriber = new StoreSubscriber(store)
   }
 
   init() {

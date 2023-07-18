@@ -9,6 +9,7 @@ export class Router {
     }
 
     this.$placeholder = $(selector)
+    this.page = null
     this.onHashChange = this.onHashChange.bind(this)
   }
 
@@ -27,6 +28,7 @@ export class Router {
 
     if (page) {
       this.$placeholder.append(page.$root)
+      this.page = page
     }
   }
 
