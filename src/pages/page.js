@@ -23,10 +23,13 @@ export class Page {
     this.store = new Store(initialState, rootReducer)
     this.storeSubscriber = new StoreSubscriber(this.store)
     this.$root = this.getRoot()
-    this.components.forEach((component) => component.init())
     this.storeSubscriber.subscribeComponents(this.components)
     this.store.dispatch(createAction(Type.PAGE_LOAD, this.name))
     this.store.subscribe(this.saveState)
+  }
+
+  getRoot() {
+    throw new Error('Method must be implemented in inherited class!')
   }
 
   saveState = debounce((state) => {
@@ -36,7 +39,6 @@ export class Page {
   destroy() {
     console.log('Destroy page!')
     this.$root.$el.remove()
-    this.components.forEach((component) => component.destroy())
     this.storeSubscriber.unsubscribeComponents()
   }
 }

@@ -1,6 +1,6 @@
-import { $ } from '@core/dom'
+import { Page } from '@/pages/page'
 import { Observer } from '@core/observer'
-import { Page } from '@core/routing/page'
+import { $ } from '@core/dom'
 
 export class Excel extends Page {
   constructor(options) {
@@ -26,5 +26,15 @@ export class Excel extends Page {
     })
 
     return $root
+  }
+
+  init() {
+    super.init()
+    this.components.forEach((component) => component.init())
+  }
+
+  destroy() {
+    super.destroy()
+    this.components.forEach((component) => component.destroy())
   }
 }
