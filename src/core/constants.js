@@ -6,4 +6,9 @@ const Attr = {
   CONTENT: 'data-content',
 }
 
-export { Ms, Attr }
+const Route = {
+  UNKNOWN_PART: 'UNKNOWN_PART',
+  MAIN: 'MAIN',
+}
+
+export { Ms, Attr, Route }
