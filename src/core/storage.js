@@ -13,6 +13,24 @@ class Storage {
     data = JSON.stringify(data)
     this.localStorage.setItem(key, data)
   }
+
+  getAllKeys(startStr) {
+    const keys = []
+
+    for (let i = 0; i < this.localStorage.length; i++) {
+      const key = this.localStorage.key(i)
+
+      if (key.startsWith(startStr)) {
+        keys.push(key)
+      }
+    }
+
+    return keys
+  }
+
+  getValues(keys) {
+    return keys.map(this.get, this)
+  }
 }
 
 export const storage = new Storage()

@@ -1,16 +1,29 @@
-const getRecordTemplate = () => {
+import { storage } from '@/core/storage'
+
+const getRecordTemplate = ({
+  title,
+  date,
+}) => {
+  date = new Date(date).toLocaleDateString('ru-RU')
+
   return `
     <li class="record">
       <a class="record__link" href="#">
-        <h3 class="record__title">Таблица 1</h3>
-        <time class="record__time" datetime="12.12.2022">12.12.2022</time>
+        <h3 class="record__title">${title}</h3>
+        <time class="record__time" datetime="${date}">${date}</time>
       </a>
     </li>
   `
 }
 
+const getRecords = () => {
+  const keys = storage.getAllKeys('excel')
+
+  return storage.getValues(keys)
+}
+
 export const getRecordsTemplate = () => {
-  const records = [{}, {}, {}]
+  const records = getRecords()
 
   return records.map(getRecordTemplate).join('')
 }

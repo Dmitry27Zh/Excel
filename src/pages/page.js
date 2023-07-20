@@ -1,5 +1,5 @@
 import { storage } from '@core/storage'
-import { INITIAL_STATE } from '@/redux/initial-state'
+import { INITIAL_STATE } from '@/redux/initial-state/initial-state'
 import { rootReducer } from '@/redux/root-reducer'
 import { Store } from '@/redux/store'
 import { StoreSubscriber } from '@/redux/store-subscriber'
@@ -19,7 +19,7 @@ export class Page {
   }
 
   init() {
-    const initialState = storage.get(this.name) ?? INITIAL_STATE
+    const initialState = storage.get(this.name) ?? INITIAL_STATE['excel']
     this.store = new Store(initialState, rootReducer)
     this.storeSubscriber = new StoreSubscriber(this.store)
     this.$root = this.getRoot()

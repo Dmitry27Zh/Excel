@@ -19,6 +19,7 @@ const updateTools = (tools, groupSelected, diff) => {
 
 export const rootReducer = (state, action) => {
   state = copyObj(state)
+  state.date = new Date().toString()
 
   switch (action.type) {
     case Type.RESIZE:
