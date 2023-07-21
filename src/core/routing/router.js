@@ -1,6 +1,7 @@
 import { $ } from '@core/dom'
 import { ActiveRoute } from '@core/routing/active-route'
 import { getRoute } from '@core/routing/routes'
+import { Page } from '@core/constants'
 
 export class Router {
   constructor(selector) {
@@ -9,6 +10,7 @@ export class Router {
     }
 
     this.$placeholder = $(selector)
+    this.mainPageHash = Page.DASHBOARD
     this.page = null
     this.onHashChange = this.onHashChange.bind(this)
   }
@@ -20,6 +22,11 @@ export class Router {
 
   onHashChange() {
     let route
+
+    if (ActiveRoute.path === '') {
+      ActiveRoute.path = this.mainPageHash
+      return
+    }
 
     try {
       route = getRoute(ActiveRoute.parts)

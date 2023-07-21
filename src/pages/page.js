@@ -13,7 +13,7 @@ export class Page {
     name,
   }) {
     this.$root = null
-    this.name = name
+    this.name = new.target.name
     this.store = null
     this.storeSubscriber = null
   }

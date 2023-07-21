@@ -1,3 +1,5 @@
+import { Separator } from '@core/constants'
+
 class Storage {
   constructor() {
     this.localStorage = localStorage
@@ -12,6 +14,10 @@ class Storage {
   set(key, data) {
     data = JSON.stringify(data)
     this.localStorage.setItem(key, data)
+  }
+
+  static generateKey(parts) {
+    return parts.join(Separator.STORAGE_KEY)
   }
 
   getAllKeys(startStr) {

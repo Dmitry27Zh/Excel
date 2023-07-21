@@ -5,7 +5,7 @@ import { Formula } from '@/components/formula/formula'
 import { Table } from '@/components/table/table'
 import { Dashboard } from '@/pages/dashboard/dashboard'
 import { Unknown } from '@/pages/unknown'
-import { Route } from '@core/constants'
+import { Page, Route } from '@core/constants'
 
 const excelOptions = {
   components: [Header, Toolbar, Formula, Table],
@@ -18,14 +18,8 @@ const unknownParamRoute = (options) => {
 }
 
 const routes = {
-  excel: {
-    new: (options) => {
-      return new Excel({
-        ...excelOptions,
-        ...options,
-      })
-    },
-    1: (options) => {
+  [Page.EXCEL]: {
+    [Route.SUB]: (options) => {
       return new Excel({
         ...excelOptions,
         ...options,
@@ -33,7 +27,7 @@ const routes = {
     },
     [Route.UNKNOWN_PART]: unknownParamRoute,
   },
-  dashboard: {
+  [Page.DASHBOARD]: {
     [Route.MAIN]: (options) => {
       return new Dashboard({
         ...options,
@@ -49,6 +43,7 @@ export const getRoute = (parts) => {
   let [main, param] = parts
   const options = {
     name: getName(parts),
+    errorPageName: main,
   }
 
   if (!(main in routes)) {

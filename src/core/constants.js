@@ -9,6 +9,16 @@ const Attr = {
 const Route = {
   UNKNOWN_PART: 'UNKNOWN_PART',
   MAIN: 'MAIN',
+  SUB: 'SUB',
 }
 
-export { Ms, Attr, Route }
+const Page = {
+  DASHBOARD: 'dashboard',
+  EXCEL: 'excel',
+}
+
+const Separator = {
+  STORAGE_KEY: '-',
+}
+
+export { Ms, Attr, Route, Page, Separator }
