@@ -11,9 +11,11 @@ import { Ms } from '@core/constants'
 export class Page {
   constructor({
     name,
+    id,
   }) {
     this.$root = null
-    this.name = new.target.name
+    this.name = name
+    this.id = id
     this.store = null
     this.storeSubscriber = null
   }

@@ -12,13 +12,27 @@ const Route = {
   SUB: 'SUB',
 }
 
-const Page = {
-  DASHBOARD: 'dashboard',
-  EXCEL: 'excel',
+const RouteParam = {
+  NEW: 'new',
+}
+
+const PageMeta = {
+  DASHBOARD: {
+    name: 'dashboard',
+    hash: 'dashboard',
+  },
+  EXCEL: {
+    name: 'excel',
+    hash: 'excel',
+  },
 }
 
 const Separator = {
   STORAGE_KEY: '-',
 }
 
-export { Ms, Attr, Route, Page, Separator }
+const Hash = {
+  EXCEL_NEW: `${PageMeta.EXCEL.name}/${RouteParam.NEW}`,
+}
+
+export { Ms, Attr, Route, RouteParam, PageMeta, Separator, Hash }

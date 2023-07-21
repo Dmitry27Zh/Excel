@@ -2,6 +2,7 @@ import { Page } from '@/pages/page'
 import { $ } from '@core/dom'
 import { getRecordsTemplate }
   from '@/pages/dashboard/dashboard.records-template'
+import { PageMeta, RouteParam } from '@core/constants'
 
 export class Dashboard extends Page {
   constructor(options) {
@@ -19,7 +20,7 @@ export class Dashboard extends Page {
           </header>
           <div class="dashboard__new">
             <div class="container container--restricted">
-              <a class="button btn-bg" href="#excel/new">Новая таблица</a>
+              <a class="button btn-bg" href="#${PageMeta.EXCEL.name}/${RouteParam.NEW}">Новая таблица</a>
             </div>
           </div>
           <div class="dashboard__table">

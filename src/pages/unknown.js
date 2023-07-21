@@ -12,7 +12,7 @@ export class Unknown extends Page {
   getRoot() {
     const $root = $.create('div').html(
         `
-          <p>Unknown page: <b>${this.errorPageName}</b></p>
+          <p>Unknown page: <b>${this.name}</b></p>
           <p>Error: ${this.msg}</p>
         `
     )

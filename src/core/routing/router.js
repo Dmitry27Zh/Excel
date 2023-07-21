@@ -1,7 +1,8 @@
 import { $ } from '@core/dom'
 import { ActiveRoute } from '@core/routing/active-route'
 import { getRoute } from '@core/routing/routes'
-import { Page } from '@core/constants'
+import { PageMeta, Hash } from '@core/constants'
+import { getID } from '@core/utils'
 
 export class Router {
   constructor(selector) {
@@ -10,7 +11,6 @@ export class Router {
     }
 
     this.$placeholder = $(selector)
-    this.mainPageHash = Page.DASHBOARD
     this.page = null
     this.onHashChange = this.onHashChange.bind(this)
   }
@@ -24,12 +24,20 @@ export class Router {
     let route
 
     if (ActiveRoute.path === '') {
-      ActiveRoute.path = this.mainPageHash
+      ActiveRoute.path = PageMeta.DASHBOARD.hash
+
       return
     }
 
+
+    const parts = ActiveRoute.parts
+
+    if (ActiveRoute.path === Hash.EXCEL_NEW) {
+      console.log(getID())
+    }
+
     try {
-      route = getRoute(ActiveRoute.parts)
+      route = getRoute(parts)
     } catch (e) {
       route = e.route
       console.warn(e)

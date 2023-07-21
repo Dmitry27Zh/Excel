@@ -1,6 +1,6 @@
 export class ActiveRoute {
   static get path() {
-    return window.location.hash
+    return window.location.hash.slice(1)
   }
 
   static set path(hash) {
@@ -8,6 +8,6 @@ export class ActiveRoute {
   }
 
   static get parts() {
-    return ActiveRoute.path.slice(1).split('/')
+    return ActiveRoute.path.split('/')
   }
 }
