@@ -5,7 +5,6 @@ import { $ } from '@core/dom'
 export class Excel extends Page {
   constructor(options) {
     super(options)
-    this.components = options.components ?? []
     this.observer = new Observer()
     this.init()
   }

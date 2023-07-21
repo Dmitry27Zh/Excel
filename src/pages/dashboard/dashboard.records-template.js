@@ -1,14 +1,16 @@
 import { storage } from '@/core/storage'
+import { PageMeta } from '@core/constants'
 
 const getRecordTemplate = ({
   title,
   date,
+  id,
 }) => {
   date = new Date(date).toLocaleDateString('ru-RU')
 
   return `
     <li class="record">
-      <a class="record__link" href="#">
+      <a class="record__link" href="#${PageMeta.EXCEL.name}/${id}">
         <h3 class="record__title">${title}</h3>
         <time class="record__time" datetime="${date}">${date}</time>
       </a>

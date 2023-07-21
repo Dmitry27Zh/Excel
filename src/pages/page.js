@@ -12,21 +12,29 @@ export class Page {
   constructor({
     name,
     id,
+    storageKey,
+    components,
   }) {
     this.$root = null
     this.name = name
     this.id = id
+    this.components = components ?? []
+    this.storeKey = storageKey
     this.store = null
     this.storeSubscriber = null
   }
 
   init() {
-    const initialState = storage.get(this.name) ?? INITIAL_STATE['excel']
+    const initialState = storage.get(this.storeKey) ?? INITIAL_STATE['excel']
     this.store = new Store(initialState, rootReducer)
     this.storeSubscriber = new StoreSubscriber(this.store)
     this.$root = this.getRoot()
     this.storeSubscriber.subscribeComponents(this.components)
-    this.store.dispatch(createAction(Type.PAGE_LOAD, this.name))
+    const { name, id } = this
+    this.store.dispatch(createAction(Type.PAGE_LOAD, {
+      name,
+      id,
+    }))
     this.store.subscribe(this.saveState)
   }
 
@@ -35,7 +43,7 @@ export class Page {
   }
 
   saveState = debounce((state) => {
-    storage.set(this.name, state)
+    storage.set(this.storeKey, state)
   }, Ms.DEBOUNCE_REDUX)
 
   destroy() {
