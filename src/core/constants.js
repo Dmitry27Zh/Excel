@@ -7,9 +7,9 @@ const Attr = {
 }
 
 const Route = {
-  UNKNOWN_PART: 'UNKNOWN_PART',
-  MAIN: 'MAIN',
-  SUB: 'SUB',
+  UNKNOWN_PART: 'unknown',
+  MAIN: 'main',
+  SUB: 'sub',
 }
 
 const RouteParam = {
@@ -31,8 +31,4 @@ const Separator = {
   STORAGE_KEY: '-',
 }
 
-const Hash = {
-  EXCEL_NEW: `${PageMeta.EXCEL.name}/${RouteParam.NEW}`,
-}
-
-export { Ms, Attr, Route, RouteParam, PageMeta, Separator, Hash }
+export { Ms, Attr, Route, RouteParam, PageMeta, Separator }

@@ -16,6 +16,10 @@ class Storage {
     this.localStorage.setItem(key, data)
   }
 
+  has(key) {
+    return !!this.localStorage.getItem(key)
+  }
+
   static generateKey(parts) {
     return parts.join(Separator.STORAGE_KEY)
   }
@@ -39,4 +43,6 @@ class Storage {
   }
 }
 
-export const storage = new Storage()
+const storage = new Storage()
+
+export { Storage, storage }
