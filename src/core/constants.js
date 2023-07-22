@@ -31,4 +31,9 @@ const Separator = {
   STORAGE_KEY: '-',
 }
 
-export { Ms, Attr, Route, RouteParam, PageMeta, Separator }
+const Mode = {
+  PRODUCTION: 'production',
+  DEVELOPMENT: 'development',
+}
+
+export { Ms, Attr, Route, RouteParam, PageMeta, Separator, Mode }

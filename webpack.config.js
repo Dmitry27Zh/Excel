@@ -1,3 +1,4 @@
+const webpack = require('webpack')
 const path = require('path')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
@@ -43,6 +44,9 @@ const getPlugins = () => {
     }),
     new MiniCssExtractPlugin({
       filename: filename('css'),
+    }),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
     }),
   ]
 
