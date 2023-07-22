@@ -7,6 +7,7 @@ import { PageMeta, RouteParam } from '@core/constants'
 export class Dashboard extends Page {
   constructor(options) {
     super(options)
+    this.needStore = false
     this.init()
   }
 

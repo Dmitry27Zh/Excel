@@ -22,13 +22,36 @@ export class Page {
     this.storeKey = storageKey
     this.store = null
     this.storeSubscriber = null
+    this.needStore = true
   }
 
   init() {
-    const initialState = storage.get(this.storeKey) ?? INITIAL_STATE['excel']
-    this.store = new Store(initialState, rootReducer)
-    this.storeSubscriber = new StoreSubscriber(this.store)
+    this.beforeRender()
     this.$root = this.getRoot()
+    this.afterRender()
+  }
+
+  beforeRender() {
+    if (this.needStore) {
+      this.initStore()
+    }
+  }
+
+  afterRender() {
+    if (this.needStore) {
+      this.setupStore()
+    }
+  }
+
+  initStore() {
+    const initialState = storage.get(this.storeKey) ??
+      INITIAL_STATE[this.name] ??
+      {}
+    this.store = new Store(initialState, rootReducer)
+  }
+
+  setupStore() {
+    this.storeSubscriber = new StoreSubscriber(this.store)
     this.storeSubscriber.subscribeComponents(this.components)
     const { name, id } = this
     this.store.subscribe(this.saveState)
@@ -49,6 +72,9 @@ export class Page {
   destroy() {
     console.log('Destroy page!')
     this.$root.$el.remove()
-    this.storeSubscriber.unsubscribeComponents()
+
+    if (this.needStore) {
+      this.storeSubscriber.unsubscribeComponents()
+    }
   }
 }

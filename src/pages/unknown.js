@@ -6,6 +6,7 @@ export class Unknown extends Page {
     super(nextOptions)
     this.errorPageName = errorPageName
     this.msg = msg
+    this.needStore = false
     this.init()
   }
 
