@@ -31,11 +31,11 @@ export class Page {
     this.$root = this.getRoot()
     this.storeSubscriber.subscribeComponents(this.components)
     const { name, id } = this
+    this.store.subscribe(this.saveState)
     this.store.dispatch(createAction(Type.PAGE_LOAD, {
       name,
       id,
     }))
-    this.store.subscribe(this.saveState)
   }
 
   getRoot() {
