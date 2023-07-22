@@ -2,8 +2,8 @@ import { ExcelComponent } from '@core/excel-component';
 import { $ } from '@core/dom';
 import { Type } from '@/redux/type';
 import { createAction } from '@/redux/actions';
-import { debounce } from '@core/utils';
-import { Ms } from '@core/constants';
+import { debounce, getHash } from '@core/utils';
+import { Ms, PageMeta } from '@core/constants';
 
 export class Header extends ExcelComponent {
   static TAG_NAME = 'header'
@@ -30,12 +30,12 @@ export class Header extends ExcelComponent {
           <input class="input__element" type="text" value="${title}" />
         </div>
         <div class="header__buttons">
-          <button class="button" type="button">
+          <a class="button" href="#${getHash(PageMeta.DASHBOARD.hash)}">
             <span class="material-icons"> exit_to_app </span>
-          </button>
-          <button class="button" type="button">
+          </a>
+          <a class="button" href="#">
             <span class="material-icons"> delete </span>
-          </button>
+          </a>
         </div>
       </div>`
   }

@@ -135,6 +135,8 @@ const combineArrayItemsToGroups = (array, groupLength) => {
 
 const getID = () => Date.now().toString()
 
+const getHash = (...parts) => parts.join('/')
+
 export {
   capitalize,
   bindAll,
@@ -148,4 +150,5 @@ export {
   isEqual,
   combineArrayItemsToGroups,
   getID,
+  getHash,
 }
