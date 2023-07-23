@@ -20,7 +20,8 @@
     ],
     "no-prototype-builtins": "off",
     "no-invalid-this": "off",
-    "no-case-declarations": "off"
+    "no-case-declarations": "off",
+    "prefer-promise-reject-errors": "off"
   },
   "extends": ["eslint:recommended", "google"]
 }

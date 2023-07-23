@@ -1,4 +1,5 @@
 import { isEqual } from '@core/utils'
+import { Mode } from '@core/constants'
 
 export class StoreSubscriber {
   constructor(store) {
@@ -22,7 +23,15 @@ export class StoreSubscriber {
         }
       })
 
+      if (process.env.NODE_ENV === Mode.DEVELOPMENT) {
+        window.redux.prevState = this.prevState
+      }
+
       this.prevState = currentState
+
+      if (process.env.NODE_ENV === Mode.DEVELOPMENT) {
+        window.redux.currentState = currentState
+      }
     })
   }
 

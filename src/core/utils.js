@@ -133,6 +133,10 @@ const combineArrayItemsToGroups = (array, groupLength) => {
   return groups
 }
 
+const getID = () => Date.now().toString()
+
+const getHash = (...parts) => parts.join('/')
+
 export {
   capitalize,
   bindAll,
@@ -145,4 +149,6 @@ export {
   copyObj,
   isEqual,
   combineArrayItemsToGroups,
+  getID,
+  getHash,
 }

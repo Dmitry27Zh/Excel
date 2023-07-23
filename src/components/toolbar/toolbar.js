@@ -3,7 +3,7 @@ import { BUTTON_ATTR } from '@/components/toolbar/toolbar.template';
 import { ExcelStateComponent } from '@/core/excel-state-component';
 import { createAction } from '@/redux/actions';
 import { Type } from '@/redux/type';
-import { INITIAL_TOOLS } from '@/redux/initial-state';
+import { EXCEL_INITIAL_TOOLS } from '@/redux/initial-state/excel-initial-state';
 
 export class Toolbar extends ExcelStateComponent {
   static CLASS_NAME = 'excel__toolbar toolbar'
@@ -54,7 +54,7 @@ export class Toolbar extends ExcelStateComponent {
     const tool = Object.keys(stateDiff)[0]
 
     const cancelTool = () => {
-      const initialValue = INITIAL_TOOLS[tool]
+      const initialValue = EXCEL_INITIAL_TOOLS[tool]
       stateDiff[tool] = initialValue
     }
 

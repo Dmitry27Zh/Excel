@@ -18,7 +18,9 @@ export class Observer {
     return unsubscribe
   }
 
-  notify(event, data) {
-    this.listeners[event].forEach((listener) => listener(data))
+  async notify(event, data) {
+    for (const listener of this.listeners[event]) {
+      await listener(data)
+    }
   }
 }

@@ -1,7 +1,5 @@
-import { storage } from '@core/storage'
-
 const CELL_SELECTED = { col: 0, row: 0 }
-const INITIAL_TOOLS = {
+const EXCEL_INITIAL_TOOLS = {
   fontWeight: 'normal',
   fontStyle: 'normal',
   textDecoration: 'none',
@@ -9,7 +7,7 @@ const INITIAL_TOOLS = {
 }
 const INITIAL_TITLE = 'Новая'
 
-const INITIAL_STATE = {
+const EXCEL_INITIAL_STATE = {
   resize: {},
   cellSelected: CELL_SELECTED,
   groupSelected: [CELL_SELECTED],
@@ -19,15 +17,13 @@ const INITIAL_STATE = {
     ['', '', ''],
   ],
   tools: [
-    [INITIAL_TOOLS, INITIAL_TOOLS, INITIAL_TOOLS],
-    [INITIAL_TOOLS, INITIAL_TOOLS, INITIAL_TOOLS],
-    [INITIAL_TOOLS, INITIAL_TOOLS, INITIAL_TOOLS],
+    [EXCEL_INITIAL_TOOLS, EXCEL_INITIAL_TOOLS, EXCEL_INITIAL_TOOLS],
+    [EXCEL_INITIAL_TOOLS, EXCEL_INITIAL_TOOLS, EXCEL_INITIAL_TOOLS],
+    [EXCEL_INITIAL_TOOLS, EXCEL_INITIAL_TOOLS, EXCEL_INITIAL_TOOLS],
   ],
   isInited: false,
   isAppLoaded: false,
   title: INITIAL_TITLE,
 }
 
-const initialState = storage.get('excel-state') ?? INITIAL_STATE
-
-export { INITIAL_TOOLS, initialState}
+export { EXCEL_INITIAL_TOOLS, EXCEL_INITIAL_STATE}

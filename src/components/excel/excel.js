@@ -1,14 +1,18 @@
-import { $ } from '@core/dom'
+import { Page } from '@/pages/page'
 import { Observer } from '@core/observer'
-import { StoreSubscriber } from '@/redux/store-subscriber'
+import { $ } from '@core/dom'
+import { storage } from '@core/storage'
 
-export class Excel {
-  constructor(selector, options) {
-    this.$el = $(selector)
-    this.components = options.components ?? []
+export class Excel extends Page {
+  constructor(options) {
+    super(options)
     this.observer = new Observer()
-    this.store = options.store
-    this.storeSubscriber = new StoreSubscriber(options.store)
+    this.listeners = {
+      'Header:delete': async () => {
+        await storage.delete(this.storeKey)
+      },
+    }
+    this.init()
   }
 
   getRoot() {
@@ -22,21 +26,21 @@ export class Excel {
       const $el = $.create(Component.TAG_NAME, Component.CLASS_NAME)
       const component = new Component($el, commonComponentSettings)
       $root.append($el)
+
       return component
     })
 
     return $root
   }
 
-  render() {
-    this.$el.append(this.getRoot())
-    this.storeSubscriber.subscribeComponents(this.components)
+  init() {
+    super.init()
     this.components.forEach((component) => component.init())
+    this.observer.subscribe('Header:delete', this.listeners['Header:delete'])
   }
 
   destroy() {
-    this.storeSubscriber.unsubscribeComponents()
+    super.destroy()
     this.components.forEach((component) => component.destroy())
-    this.$el.clear()
   }
 }
