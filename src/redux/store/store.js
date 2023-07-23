@@ -1,6 +1,6 @@
-import { createAction } from '@/redux/actions'
-import { Type } from '@/redux/type'
-import { copyObj } from '@core/utils'
+import { createAction } from '../actions'
+import { Type } from '../type'
+import { copyObj } from '../../core/utils'
 
 export class Store {
   constructor(state, rootReducer) {

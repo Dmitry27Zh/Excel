@@ -15,12 +15,7 @@ const jsLoaders = () => {
   const loaders = []
 
   if (isProd) {
-    loaders.push({
-      loader: 'babel-loader',
-      options: {
-        presets: [['@babel/preset-env', { targets: 'defaults' }]],
-      },
-    },)
+    loaders.push('babel-loader')
   }
 
   return loaders
