@@ -1,11 +1,17 @@
 import { Page } from '@/pages/page'
 import { Observer } from '@core/observer'
 import { $ } from '@core/dom'
+import { storage } from '@core/storage'
 
 export class Excel extends Page {
   constructor(options) {
     super(options)
     this.observer = new Observer()
+    this.listeners = {
+      'Header:delete': async () => {
+        await storage.delete(this.storeKey)
+      },
+    }
     this.init()
   }
 
@@ -30,6 +36,7 @@ export class Excel extends Page {
   init() {
     super.init()
     this.components.forEach((component) => component.init())
+    this.observer.subscribe('Header:delete', this.listeners['Header:delete'])
   }
 
   destroy() {

@@ -25,6 +25,9 @@ const PageMeta = {
     name: 'excel',
     hash: 'excel',
   },
+  UNKNOWN: {
+    name: 'unknown',
+  },
 }
 
 const Separator = {

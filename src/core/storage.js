@@ -1,4 +1,5 @@
 import { Separator } from '@core/constants'
+import { Loader } from '@core/loader'
 
 class Storage {
   constructor() {
@@ -18,6 +19,26 @@ class Storage {
 
   has(key) {
     return !!this.localStorage.getItem(key)
+  }
+
+  async delete(key) {
+    Loader.on()
+
+    try {
+      await new Promise((resolve, reject) => {
+        if (this.has(key)) {
+          this.localStorage.removeItem(key)
+          resolve()
+        } else {
+          reject()
+        }
+      })
+    } catch (e) {
+      console.warn(`Failed storage delete: ${e}`)
+      throw e
+    } finally {
+      Loader.off()
+    }
   }
 
   static generateKey(parts) {

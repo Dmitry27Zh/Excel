@@ -4,6 +4,7 @@ import { Type } from '@/redux/type';
 import { createAction } from '@/redux/actions';
 import { debounce, getHash } from '@core/utils';
 import { Ms, PageMeta } from '@core/constants';
+import { ActiveRoute } from '@/routing/active-route';
 
 export class Header extends ExcelComponent {
   static TAG_NAME = 'header'
@@ -11,9 +12,13 @@ export class Header extends ExcelComponent {
 
   constructor($root, options) {
     super($root, {
-      eventTypes: ['input'],
+      eventTypes: ['input', 'click'],
       ...options,
     })
+
+    this.action = {
+      delete: this.delete,
+    }
   }
 
   prepare() {
@@ -33,9 +38,9 @@ export class Header extends ExcelComponent {
           <a class="button" href="#${getHash(PageMeta.DASHBOARD.hash)}">
             <span class="material-icons"> exit_to_app </span>
           </a>
-          <a class="button" href="#">
+          <button class="button" type="button" data-action="delete">
             <span class="material-icons"> delete </span>
-          </a>
+          </button>
         </div>
       </div>`
   }
@@ -43,5 +48,27 @@ export class Header extends ExcelComponent {
   onInput(event) {
     const title = $(event.target).text()
     this.storeDispatch(createAction(Type.TITLE_INPUT, title))
+  }
+
+  async onClick(event) {
+    const actionName = event.target.dataset.action
+    const action = this.action[actionName]
+
+    if (action) {
+      await action()
+    }
+  }
+
+  async delete() {
+    const continueDelete = confirm('Do you really want to delete excel?')
+
+    if (continueDelete) {
+      try {
+        await this.observer.notify('Header:delete')
+        ActiveRoute.path = getHash(PageMeta.DASHBOARD.hash)
+      } catch (e) {
+        console.warn(`Failed delete: ${e}`)
+      }
+    }
   }
 }
