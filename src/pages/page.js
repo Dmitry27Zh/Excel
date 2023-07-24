@@ -1,7 +1,7 @@
 import { storage } from '@core/storage'
 import { INITIAL_STATE } from '@/redux/initial-state/initial-state'
 import { rootReducer } from '@/redux/root-reducer'
-import { Store } from '@/redux/store'
+import { Store } from '@/redux/store/store'
 import { StoreSubscriber } from '@/redux/store-subscriber'
 import { createAction } from '@/redux/actions'
 import { Type } from '@/redux/type'
