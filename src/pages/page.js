@@ -22,6 +22,7 @@ export class Page {
     this.storeKey = storageKey
     this.store = null
     this.storeSubscriber = null
+    this.storeSubscribtion = null
     this.needStore = true
   }
 
@@ -54,7 +55,7 @@ export class Page {
     this.storeSubscriber = new StoreSubscriber(this.store)
     this.storeSubscriber.subscribeComponents(this.components)
     const { name, id } = this
-    this.store.subscribe(this.saveState)
+    this.storeSubscribtion = this.store.subscribe(this.saveState)
     this.store.dispatch(createAction(Type.PAGE_LOAD, {
       name,
       id,
@@ -75,6 +76,7 @@ export class Page {
 
     if (this.needStore) {
       this.storeSubscriber.unsubscribeComponents()
+      this.storeSubscribtion.unsubscribe()
     }
   }
 }
