@@ -2,6 +2,7 @@ import { $ } from '@core/dom'
 import { ActiveRoute } from '@/routing/active-route'
 import { getRoute } from '@/routing/routes'
 import { PageMeta } from '@core/constants'
+import { Loader } from '@core/loader'
 
 export class Router {
   constructor(selector) {
@@ -19,7 +20,7 @@ export class Router {
     this.onHashChange()
   }
 
-  onHashChange() {
+  async onHashChange() {
     if (ActiveRoute.path === '') {
       ActiveRoute.path = PageMeta.DASHBOARD.hash
 
@@ -28,12 +29,14 @@ export class Router {
 
     const { createPage, msg } = getRoute(ActiveRoute.parts)
     console.warn(msg)
-    this.render(createPage)
+    await this.render(createPage)
   }
 
-  render(createPage) {
-    const page = createPage()
+  async render(createPage) {
     this.page?.destroy()
+    Loader.on()
+    const page = await createPage()
+    Loader.off()
     this.$placeholder.append(page.$root)
     this.page = page
   }

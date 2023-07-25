@@ -13,29 +13,41 @@ const excelOptions = {
   components: [Header, Toolbar, Formula, Table],
 }
 
-const unknownParamRoute = (options) => {
-  return new Unknown(options)
+const unknownParamRoute = async (options) => {
+  const page = new Unknown(options)
+  await page.init()
+
+  return page
 }
 
 const routes = {
   [PageMeta.EXCEL.name]: {
-    [Route.SUB]: (options) => {
-      return new Excel({
+    [Route.SUB]: async (options) => {
+      const page = new Excel({
         ...excelOptions,
         ...options,
       })
+      await page.init()
+
+      return page
     },
     [Route.UNKNOWN_PART]: unknownParamRoute,
   },
   [PageMeta.DASHBOARD.name]: {
-    [Route.MAIN]: (options) => {
-      return new Dashboard({
+    [Route.MAIN]: async (options) => {
+      const page = new Dashboard({
         ...options,
       })
+      await page.init()
+
+      return page
     },
   },
-  [Route.UNKNOWN_PART]: (options) => {
-    return new Unknown(options)
+  [Route.UNKNOWN_PART]: async (options) => {
+    const page = new Unknown(options)
+    await page.init()
+
+    return page
   },
 }
 

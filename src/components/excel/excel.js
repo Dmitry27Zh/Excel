@@ -12,7 +12,6 @@ export class Excel extends Page {
         await storage.delete(this.storeKey)
       },
     }
-    this.init()
   }
 
   getRoot() {
@@ -33,8 +32,8 @@ export class Excel extends Page {
     return $root
   }
 
-  init() {
-    super.init()
+  async init() {
+    await super.init()
     this.components.forEach((component) => component.init())
     this.observer.subscribe('Header:delete', this.listeners['Header:delete'])
   }

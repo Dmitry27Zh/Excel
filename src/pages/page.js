@@ -8,6 +8,41 @@ import { Type } from '@/redux/type'
 import { debounce } from '@core/utils'
 import { Ms } from '@core/constants'
 
+class StateProcessor {
+  constructor(client, delay = Ms.DEBOUNCE_REDUX) {
+    this.client = client
+    this.listen = debounce(this.listen.bind(this), delay)
+  }
+
+  listen(state) {
+    this.client.set(state)
+  }
+
+  get() {
+    return this.client.get()
+  }
+}
+
+class LocaleStorageClient {
+  constructor(key) {
+    this.key = key
+  }
+
+  set(state) {
+    storage.set(this.key, state)
+
+    return Promise.resolve()
+  }
+
+  get() {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(storage.get(this.key))
+      }, 3000)
+    })
+  }
+}
+
 export class Page {
   constructor({
     name,
@@ -24,17 +59,20 @@ export class Page {
     this.storeSubscriber = null
     this.storeSubscribtion = null
     this.needStore = true
+    this.stateProcessor = new StateProcessor(
+        new LocaleStorageClient(this.storeKey)
+    )
   }
 
-  init() {
-    this.beforeRender()
+  async init() {
+    await this.beforeRender()
     this.$root = this.getRoot()
     this.afterRender()
   }
 
-  beforeRender() {
+  async beforeRender() {
     if (this.needStore) {
-      this.initStore()
+      await this.initStore()
     }
   }
 
@@ -44,10 +82,9 @@ export class Page {
     }
   }
 
-  initStore() {
-    const initialState = storage.get(this.storeKey) ??
-      INITIAL_STATE[this.name] ??
-      {}
+  async initStore() {
+    let initialState = await this.stateProcessor.get(this.storeKey)
+    initialState = initialState ?? INITIAL_STATE[this.name] ?? {}
     this.store = new Store(initialState, rootReducer)
   }
 
@@ -55,7 +92,7 @@ export class Page {
     this.storeSubscriber = new StoreSubscriber(this.store)
     this.storeSubscriber.subscribeComponents(this.components)
     const { name, id } = this
-    this.storeSubscribtion = this.store.subscribe(this.saveState)
+    this.storeSubscribtion = this.store.subscribe(this.stateProcessor.listen)
     this.store.dispatch(createAction(Type.PAGE_LOAD, {
       name,
       id,
@@ -66,9 +103,9 @@ export class Page {
     throw new Error('Method must be implemented in inherited class!')
   }
 
-  saveState = debounce((state) => {
+  saveState(state) {
     storage.set(this.storeKey, state)
-  }, Ms.DEBOUNCE_REDUX)
+  }
 
   destroy() {
     console.log('Destroy page!')

@@ -7,7 +7,6 @@ export class Unknown extends Page {
     this.errorPageName = errorPageName
     this.msg = msg
     this.needStore = false
-    this.init()
   }
 
   getRoot() {
