@@ -104,6 +104,8 @@ export class Table extends ExcelComponent {
   }
 
   onMousedown(event) {
+    event.preventDefault()
+
     if (Resizer.isResizer(event.target)) {
       this.startResize(event)
     }
